@@ -15,6 +15,16 @@ from caliburn.task_store import get_task_store
 
 @pytest.fixture(autouse=True)
 def config_for_tests(monkeypatch: pytest.MonkeyPatch, tmp_path: Path):
+    # Direct fixed-data-runner fixtures must never write the host's /work.
+    # Real Docker tests load the unmodified runner in their isolated container.
+    from caliburn.sandbox import runner
+
+    def fixture_path(*parts):
+        if parts == ("/work",):
+            return tmp_path / "data-runner"
+        return Path(*parts)
+
+    monkeypatch.setattr(runner, "Path", fixture_path)
     monkeypatch.delenv("CALIBURN_API_ENV_FILE", raising=False)
     monkeypatch.setenv("CALIBURN_API_TOKEN", "test-service-token-secret")
     monkeypatch.setenv("CALIBURN_PROVIDER", "fixture")

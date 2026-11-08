@@ -1,0 +1,29 @@
+{
+  "run_url": "https://github.com/leemg1476/CALIBURN/actions/runs/42478707833",
+  "commit": "320a053a27cecdfac3e8a50d94285a991ebb43da",
+  "platform": "GitHub-hosted Ubuntu 26.04 / Python 3.12.16",
+  "conclusion": "failure",
+  "pytest": {
+    "passed": 267,
+    "failed": 14,
+    "skipped": 77
+  },
+  "cause": "Direct inert data-runner fixtures wrote host /work; unprivileged Linux denies host-root writes",
+  "failures": [
+    "tests/test_candidate_ancestry.py::test_parent_patch_preserves_other_files_and_cross_task_is_denied[sqlite] - PermissionError: [Errno 13] Permission denied: '/work'",
+    "tests/test_candidate_ancestry.py::test_parent_patch_preserves_other_files_and_cross_task_is_denied[postgres] - PermissionError: [Errno 13] Permission denied: '/work'",
+    "tests/test_candidate_ancestry.py::test_candidate_ancestry_is_bounded_and_wrong_parent_base_hash_fails[sqlite] - PermissionError: [Errno 13] Permission denied: '/work'",
+    "tests/test_candidate_ancestry.py::test_candidate_ancestry_is_bounded_and_wrong_parent_base_hash_fails[postgres] - PermissionError: [Errno 13] Permission denied: '/work'",
+    "tests/test_review.py::test_temp_mapping_cannot_restore_repository_reviewer[postgres] - PermissionError: [Errno 13] Permission denied: '/work'",
+    "tests/test_review.py::test_exact_binding_independence_and_immutable_evidence[postgres] - PermissionError: [Errno 13] Permission denied: '/work'",
+    "tests/test_review.py::test_review_failure_paths[postgres-REJECT] - PermissionError: [Errno 13] Permission denied: '/work'",
+    "tests/test_review.py::test_review_failure_paths[postgres-cancel] - PermissionError: [Errno 13] Permission denied: '/work'",
+    "tests/test_review.py::test_review_failure_paths[postgres-timeout] - PermissionError: [Errno 13] Permission denied: '/work'",
+    "tests/test_review.py::test_review_failure_paths[postgres-expired] - PermissionError: [Errno 13] Permission denied: '/work'",
+    "tests/test_review.py::test_cross_task_candidate_and_revoked_workspace_denied[postgres] - PermissionError: [Errno 13] Permission denied: '/work'",
+    "tests/test_reviewed_execution.py::test_readonly_or_review_only_is_not_execution_authority[postgres] - PermissionError: [Errno 13] Permission denied: '/work'",
+    "tests/test_task_checkout.py::test_actual_task_checkout_and_staged_candidate_diff[sqlite] - PermissionError: [Errno 13] Permission denied: '/work'",
+    "tests/test_task_checkout.py::test_actual_task_checkout_and_staged_candidate_diff[postgres] - PermissionError: [Errno 13] Permission denied: '/work'"
+  ],
+  "paid_model_calls": 0
+}
