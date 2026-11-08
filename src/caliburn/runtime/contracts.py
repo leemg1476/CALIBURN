@@ -1,6 +1,6 @@
 """Durable task API contracts; clients cannot choose actor, tenant or policy."""
 
-from typing import Literal
+from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -22,6 +22,9 @@ class Submit(BaseModel):
     workspace_ref: str | None = Field(default=None, min_length=36, max_length=36)
     idempotency_key: str | None = Field(default=None, min_length=1, max_length=200)
     limits: Limits = Field(default_factory=Limits)
+    capabilities: (
+        list[Annotated[str, Field(pattern=r"^[a-z][a-z0-9_]{2,63}$", max_length=64)]] | None
+    ) = Field(default=None, max_length=8)
 
 
 class Task(BaseModel):

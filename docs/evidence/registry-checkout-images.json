@@ -1,0 +1,16 @@
+{
+  "context": "codex/registry-reuse Windows checkout",
+  "reviewed_test_image": "sha256:c0d1ebeb59ec271b18254e39eb0fa83436f5f4744db38992270648419dfcfde1",
+  "git_image": "sha256:ccc860f998e6a4ad20564064451487c3a3cc3cf3b41d26bfcf86bbc69e0bdf1e",
+  "git_base_image": "sha256:304e6307141490b6f48d0bb0763411b19464873e422530e7a02b1e37318f572a",
+  "git_build": "FROM previously approved local git-dev image; COPY current maintained runner/git_workspace/git_runner only; --network=none --pull=false; no RUN or added packages",
+  "source_sha256": {
+    "runner.py": "5c12835092a9d80e07869bd1144247395ceca4359a226b034901afc4915e8d1e",
+    "git_runner.py": "061a7bdaecd0bbb459dc5d9e54b4de587bd77d75502c82d608d7209acd198bd7",
+    "git_workspace.py": "333c69e34a48fcf20e3b530ed46c345ec3f6865ec4be16c2177feebb585bcf30",
+    "test_runner.py": "5dc66f360dcc6179b979157656c38716d3e89fbfd1859539377fe44bd5682c08",
+    "invoke_runner.py": "821d6bcdca2294d98d522a6c185466422cab5dd4db5ab4cce82dee014a1754dd"
+  },
+  "new_permissions": false,
+  "new_dependencies": false
+}

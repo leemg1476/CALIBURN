@@ -1,5 +1,7 @@
 # Security requirements and threat model
 
+Development approval update (2026-11-08): the user explicitly delegates development/internal-demonstration review and approval to the trusted development agent, including its own proposals. The former blanket ban on self-approval is superseded. Record the actual approving actor, scope/hash and evidence. Database control-plane separation still prevents untrusted runtime/model output from creating approval records. Sandbox, secret isolation and immutable evidence checks remain enforced. ADR0016 describes the working internal release/invocation tier; this is separate from enterprise production clearance.
+
 Factory proposal slice (ADR0010/schema0005): source/test/skill text remains inert even when syntax/fixtures are valid. Requested permissions/secret handles grant no rights. There are no production candidate invocation/promotion/signing routes. ADR0012 now adds a separately reviewed, default-off stdlib sandbox-test executor; static/proposal results alone still confer no executable authority. PostgreSQL records are append-only, author/scoped to live permitted Task/Step; service queries check actor/tenant and configured known-secret values. The development fixed principal and trusted DB boundary are not customer OIDC/RLS isolation. Model-generated tests/SBOM/licenses remain unverified declarations. Git image approval remains separate and pending.
 
 ## Trust premise

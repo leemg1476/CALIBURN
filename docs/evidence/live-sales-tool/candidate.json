@@ -1,0 +1,188 @@
+{
+  "manifest": {
+    "name": "monthly_region_sales",
+    "version": "1.0.1",
+    "kind": "tool",
+    "description": "Aggregates business sales records by year, month, and region using integer cents.",
+    "entrypoint": "monthly_sales.py:run",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "records": {
+          "type": "array",
+          "maxItems": 1000,
+          "items": {
+            "type": "object",
+            "properties": {
+              "year": {
+                "type": "integer",
+                "minimum": 2000,
+                "maximum": 2100
+              },
+              "month": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 12
+              },
+              "region": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 40
+              },
+              "amount_cents": {
+                "type": "integer",
+                "minimum": -1000000000,
+                "maximum": 1000000000
+              }
+            },
+            "required": [
+              "year",
+              "month",
+              "region",
+              "amount_cents"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "records"
+      ],
+      "additionalProperties": false
+    },
+    "output_schema": {
+      "type": "object",
+      "properties": {
+        "groups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "year": {
+                "type": "integer"
+              },
+              "month": {
+                "type": "integer"
+              },
+              "region": {
+                "type": "string"
+              },
+              "total_cents": {
+                "type": "integer"
+              },
+              "count": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "year",
+              "month",
+              "region",
+              "total_cents",
+              "count"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "total_cents": {
+          "type": "integer"
+        },
+        "record_count": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "groups",
+        "total_cents",
+        "record_count"
+      ],
+      "additionalProperties": false
+    },
+    "permissions": [],
+    "timeout_seconds": 10,
+    "failure_modes": [
+      "Input records must conform to the declared schema.",
+      "Aggregation returns one group for each distinct year, month, and region combination."
+    ]
+  },
+  "sources": {
+    "monthly_sales.py": "def run(records):\n    totals = {}\n    counts = {}\n    keys = []\n    total_cents = 0\n    for record in records:\n        key = (record[\"year\"], record[\"month\"], record[\"region\"])\n        if key not in totals:\n            totals[key] = 0\n            counts[key] = 0\n            keys = keys + [key]\n        totals[key] = totals[key] + record[\"amount_cents\"]\n        counts[key] = counts[key] + 1\n        total_cents = total_cents + record[\"amount_cents\"]\n    groups = []\n    for key in sorted(keys):\n        groups = groups + [{\"year\": key[0], \"month\": key[1], \"region\": key[2], \"total_cents\": totals[key], \"count\": counts[key]}]\n    return {\"groups\": groups, \"total_cents\": total_cents, \"record_count\": len(records)}"
+  },
+  "tests": {
+    "test_monthly_sales.py": "import unittest\nimport monthly_sales\n\nclass MonthlySalesTests(unittest.TestCase):\n    def test_empty(self):\n        records = []\n        self.assertEqual(monthly_sales.run(records=records), {\"groups\": [], \"total_cents\": 0, \"record_count\": 0})\n\n    def test_group_sort_refunds_zero_and_count(self):\n        records = [\n            {\"year\": 2025, \"month\": 2, \"region\": \"West\", \"amount_cents\": 0},\n            {\"year\": 2024, \"month\": 12, \"region\": \"East\", \"amount_cents\": 500},\n            {\"year\": 2025, \"month\": 2, \"region\": \"West\", \"amount_cents\": -125},\n            {\"year\": 2025, \"month\": 1, \"region\": \"West\", \"amount_cents\": 300},\n        ]\n        self.assertEqual(monthly_sales.run(records=records), {\n            \"groups\": [\n                {\"year\": 2024, \"month\": 12, \"region\": \"East\", \"total_cents\": 500, \"count\": 1},\n                {\"year\": 2025, \"month\": 1, \"region\": \"West\", \"total_cents\": 300, \"count\": 1},\n                {\"year\": 2025, \"month\": 2, \"region\": \"West\", \"total_cents\": -125, \"count\": 2},\n            ],\n            \"total_cents\": 675,\n            \"record_count\": 4,\n        })\n\nif __name__ == \"__main__\":\n    unittest.main()"
+  },
+  "fixtures": [
+    {
+      "name": "empty_input",
+      "input": {
+        "records": []
+      },
+      "expected": {
+        "groups": [],
+        "total_cents": 0,
+        "record_count": 0
+      }
+    },
+    {
+      "name": "mixed_sales_refund_and_zero",
+      "input": {
+        "records": [
+          {
+            "year": 2025,
+            "month": 2,
+            "region": "West",
+            "amount_cents": 0
+          },
+          {
+            "year": 2024,
+            "month": 12,
+            "region": "East",
+            "amount_cents": 500
+          },
+          {
+            "year": 2025,
+            "month": 2,
+            "region": "West",
+            "amount_cents": -125
+          },
+          {
+            "year": 2025,
+            "month": 1,
+            "region": "West",
+            "amount_cents": 300
+          }
+        ]
+      },
+      "expected": {
+        "groups": [
+          {
+            "year": 2024,
+            "month": 12,
+            "region": "East",
+            "total_cents": 500,
+            "count": 1
+          },
+          {
+            "year": 2025,
+            "month": 1,
+            "region": "West",
+            "total_cents": 300,
+            "count": 1
+          },
+          {
+            "year": 2025,
+            "month": 2,
+            "region": "West",
+            "total_cents": -125,
+            "count": 2
+          }
+        ],
+        "total_cents": 675,
+        "record_count": 4
+      }
+    }
+  ],
+  "dependency_lock": [],
+  "sbom_components": [],
+  "declared_license": "LicenseRef-Proprietary"
+}

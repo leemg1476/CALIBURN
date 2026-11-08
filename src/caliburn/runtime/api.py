@@ -14,6 +14,7 @@ from caliburn.runtime.contracts import History, Submit, Task
 from caliburn.runtime.redaction import contains_secret, platform_secrets
 from caliburn.runtime.store import TERMINAL, Conflict, NotFound, get_store
 from caliburn.tool_factory.qualification import Qualification
+from caliburn.tool_factory.release_contracts import ReleaseDenied
 
 
 def router(auth):
@@ -38,7 +39,10 @@ def router(auth):
                 allow_capability_proposals=settings.allow_capability_proposals,
                 allow_capability_checks=settings.allow_capability_checks,
                 allow_factory_execution=settings.allow_factory_execution,
+                allow_registry_invocation=settings.allow_registry_invocation,
             )
+        except ReleaseDenied as exc:
+            raise HTTPException(403, "Capability grant unavailable") from exc
         except NotFound as exc:
             raise HTTPException(404, "Workspace grant not found") from exc
         except Conflict as exc:

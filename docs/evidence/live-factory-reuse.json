@@ -1,0 +1,368 @@
+{
+  "scenario": "actual paid model generation -> ABI rejection -> model repair -> qualification -> internal signed release -> two new tasks reuse",
+  "real_model": "gpt-6-luna",
+  "synthetic_business_data": true,
+  "scope": "internal_development",
+  "production_approved": false,
+  "approval": "explicit user approval plus delegated development authority",
+  "candidate_ref": "b31aa8ec-b6fd-4104-9fbc-0cb8676a111f",
+  "source_sha256": "be206421371f5d22212b6c22f3964788d9b3f5d8f57b476a8867f3de2d20d5c4",
+  "artifact_ref": "48a2cf97-014f-4589-9eec-ed893292ea0a",
+  "release_ref": "726eea3a-f49b-4ab3-9b49-225b12fdd411",
+  "qualification": {
+    "task_id": "9bafa973-75f4-4f52-bf6b-10993450213d",
+    "elapsed_seconds": 12.266,
+    "run": {
+      "status": "PASSED",
+      "exit_code": 0,
+      "output": "test_declared_fixtures (test_caliburn_contract.ContractFixtureTest.test_declared_fixtures) ... ok\ntest_empty (test_monthly_sales.MonthlySalesTests.test_empty) ... ok\ntest_group_sort_refunds_zero_and_count (test_monthly_sales.MonthlySalesTests.test_group_sort_refunds_zero_and_count) ... ok\ntest_boundary_and_refund (test_owner_sales.OwnerSales.test_boundary_and_refund) ... ok\ntest_empty_independently (test_owner_sales.OwnerSales.test_empty_independently) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.001s\n\nOK\n",
+      "truncated": false,
+      "source_sha256": "be206421371f5d22212b6c22f3964788d9b3f5d8f57b476a8867f3de2d20d5c4",
+      "plan_sha256": "14e91532c863b8ed5ecf8cc22015cdafadb675e0e94d8a0b16a2628d8846f240"
+    },
+    "host_oracle": {
+      "version": "host-oracle-v2",
+      "plan_sha256": "05b8a0aad670f87c7dc2edfaebb0215b7a2837c7ab7d81d8c50a7b7906641819",
+      "total": 2,
+      "checked": 2,
+      "status": "PASSED",
+      "profile": "repeat-order-replay-v1",
+      "sessions_total": 4,
+      "sessions_checked": 4,
+      "observations_total": 16,
+      "observations_checked": 16
+    },
+    "isolation": {
+      "CapEff": "0000000000000000",
+      "NoNewPrivs": "1",
+      "Seccomp": "2",
+      "runner_sha256": "2ce26366f039c4016493717290249a7fa48de2fe65dc239ef6fe0d9397b7d41e",
+      "uid": 10001,
+      "root_readonly": true,
+      "docker_socket": false,
+      "interfaces": [
+        "lo"
+      ],
+      "memory_max": "134217728",
+      "pids_max": "32",
+      "cpu_max": "50000 100000"
+    }
+  },
+  "reuse": [
+    {
+      "task_id": "ea4d7178-0ba0-48bd-9389-8f23c2cc9823",
+      "elapsed_seconds": 7.688,
+      "state": "COMPLETED",
+      "result": "{\"ok\":true,\"release_ref\":\"726eea3a-f49b-4ab3-9b49-225b12fdd411\",\"version\":\"1.0.1\",\"source_sha256\":\"be206421371f5d22212b6c22f3964788d9b3f5d8f57b476a8867f3de2d20d5c4\",\"value\":{\"groups\":[{\"year\":2026,\"month\":10,\"region\":\"Seoul\",\"total_cents\":10000,\"count\":2},{\"year\":2026,\"month\":11,\"region\":\"Busan\",\"total_cents\":4500,\"count\":1}],\"total_cents\":14500,\"record_count\":3},\"error\":null}",
+      "model_calls": 2,
+      "tool_calls": 1,
+      "expected_total_cents": 14500,
+      "input_records": [
+        {
+          "year": 2026,
+          "month": 10,
+          "region": "Seoul",
+          "amount_cents": 12000
+        },
+        {
+          "year": 2026,
+          "month": 10,
+          "region": "Seoul",
+          "amount_cents": -2000
+        },
+        {
+          "year": 2026,
+          "month": 11,
+          "region": "Busan",
+          "amount_cents": 4500
+        }
+      ],
+      "receipt": {
+        "release_id": "726eea3a-f49b-4ab3-9b49-225b12fdd411",
+        "arguments": {
+          "records": [
+            {
+              "year": 2026,
+              "month": 10,
+              "region": "Seoul",
+              "amount_cents": 12000
+            },
+            {
+              "year": 2026,
+              "month": 10,
+              "region": "Seoul",
+              "amount_cents": -2000
+            },
+            {
+              "year": 2026,
+              "month": 11,
+              "region": "Busan",
+              "amount_cents": 4500
+            }
+          ]
+        },
+        "input_sha256": "ced9266a3527e61af69a766bd8f1836840467a1e1b071f6d3fc0517233b795d6",
+        "state": "COMPLETED",
+        "attempts": 1,
+        "result": {
+          "ok": true,
+          "release_ref": "726eea3a-f49b-4ab3-9b49-225b12fdd411",
+          "version": "1.0.1",
+          "source_sha256": "be206421371f5d22212b6c22f3964788d9b3f5d8f57b476a8867f3de2d20d5c4",
+          "value": {
+            "groups": [
+              {
+                "year": 2026,
+                "month": 10,
+                "region": "Seoul",
+                "total_cents": 10000,
+                "count": 2
+              },
+              {
+                "year": 2026,
+                "month": 11,
+                "region": "Busan",
+                "total_cents": 4500,
+                "count": 1
+              }
+            ],
+            "total_cents": 14500,
+            "record_count": 3
+          },
+          "error": null
+        },
+        "result_sha256": "e39a6c7823fde285eb1817e88db966f63d764411f038f4634152528cfef0c541"
+      }
+    },
+    {
+      "task_id": "f729b7a6-ce57-4436-8485-f5f38512ba89",
+      "elapsed_seconds": 6.844,
+      "state": "COMPLETED",
+      "result": "{\"ok\":true,\"release_ref\":\"726eea3a-f49b-4ab3-9b49-225b12fdd411\",\"version\":\"1.0.1\",\"source_sha256\":\"be206421371f5d22212b6c22f3964788d9b3f5d8f57b476a8867f3de2d20d5c4\",\"value\":{\"groups\":[{\"year\":2026,\"month\":12,\"region\":\"Daegu\",\"total_cents\":-50,\"count\":1},{\"year\":2027,\"month\":1,\"region\":\"Jeju\",\"total_cents\":1000,\"count\":2}],\"total_cents\":950,\"record_count\":3},\"error\":null}",
+      "model_calls": 2,
+      "tool_calls": 1,
+      "expected_total_cents": 950,
+      "input_records": [
+        {
+          "year": 2027,
+          "month": 1,
+          "region": "Jeju",
+          "amount_cents": 800
+        },
+        {
+          "year": 2027,
+          "month": 1,
+          "region": "Jeju",
+          "amount_cents": 200
+        },
+        {
+          "year": 2026,
+          "month": 12,
+          "region": "Daegu",
+          "amount_cents": -50
+        }
+      ],
+      "receipt": {
+        "release_id": "726eea3a-f49b-4ab3-9b49-225b12fdd411",
+        "arguments": {
+          "records": [
+            {
+              "year": 2027,
+              "month": 1,
+              "region": "Jeju",
+              "amount_cents": 800
+            },
+            {
+              "year": 2027,
+              "month": 1,
+              "region": "Jeju",
+              "amount_cents": 200
+            },
+            {
+              "year": 2026,
+              "month": 12,
+              "region": "Daegu",
+              "amount_cents": -50
+            }
+          ]
+        },
+        "input_sha256": "8d738b81dd19d4cd8c79aa4bada52823a337c1597a2b30ec36b9067ea1f22919",
+        "state": "COMPLETED",
+        "attempts": 1,
+        "result": {
+          "ok": true,
+          "release_ref": "726eea3a-f49b-4ab3-9b49-225b12fdd411",
+          "version": "1.0.1",
+          "source_sha256": "be206421371f5d22212b6c22f3964788d9b3f5d8f57b476a8867f3de2d20d5c4",
+          "value": {
+            "groups": [
+              {
+                "year": 2026,
+                "month": 12,
+                "region": "Daegu",
+                "total_cents": -50,
+                "count": 1
+              },
+              {
+                "year": 2027,
+                "month": 1,
+                "region": "Jeju",
+                "total_cents": 1000,
+                "count": 2
+              }
+            ],
+            "total_cents": 950,
+            "record_count": 3
+          },
+          "error": null
+        },
+        "result_sha256": "3a6220615fd5a439bc9265df067046dc2bf4b56d4e86ee417b83e4a8b843706f"
+      }
+    }
+  ],
+  "metrics": [
+    {
+      "release_ref": "726eea3a-f49b-4ab3-9b49-225b12fdd411",
+      "name": "monthly_region_sales",
+      "version": "1.0.1",
+      "invocations": 2,
+      "dispatch_attempts": 2,
+      "successful": 2,
+      "failed": 0,
+      "quarantined": false,
+      "revocation_reason": null
+    }
+  ],
+  "cumulative_budget": {
+    "max_calls": 100,
+    "max_tokens": 50000,
+    "attempts": 17,
+    "charged_tokens": 21648,
+    "actual_tokens": 21648,
+    "usage": [
+      {
+        "prompt_tokens": 193,
+        "completion_tokens": 21,
+        "total_tokens": 214
+      },
+      {
+        "prompt_tokens": 233,
+        "completion_tokens": 21,
+        "total_tokens": 254
+      },
+      {
+        "prompt_tokens": 273,
+        "completion_tokens": 4,
+        "total_tokens": 277
+      },
+      {
+        "prompt_tokens": 1273,
+        "completion_tokens": 20,
+        "total_tokens": 1293
+      },
+      {
+        "prompt_tokens": 1326,
+        "completion_tokens": 1238,
+        "total_tokens": 2564
+      },
+      {
+        "prompt_tokens": 2763,
+        "completion_tokens": 67,
+        "total_tokens": 2830
+      },
+      {
+        "prompt_tokens": 2570,
+        "completion_tokens": 1284,
+        "total_tokens": 3854
+      },
+      {
+        "prompt_tokens": 4060,
+        "completion_tokens": 63,
+        "total_tokens": 4123
+      },
+      {
+        "prompt_tokens": 268,
+        "completion_tokens": 41,
+        "total_tokens": 309
+      },
+      {
+        "prompt_tokens": 543,
+        "completion_tokens": 128,
+        "total_tokens": 671
+      },
+      {
+        "prompt_tokens": 368,
+        "completion_tokens": 38,
+        "total_tokens": 406
+      },
+      {
+        "prompt_tokens": 530,
+        "completion_tokens": 40,
+        "total_tokens": 570
+      },
+      {
+        "prompt_tokens": 1516,
+        "completion_tokens": 198,
+        "total_tokens": 1714
+      },
+      {
+        "prompt_tokens": 381,
+        "completion_tokens": 83,
+        "total_tokens": 464
+      },
+      {
+        "prompt_tokens": 666,
+        "completion_tokens": 162,
+        "total_tokens": 828
+      },
+      {
+        "prompt_tokens": 378,
+        "completion_tokens": 80,
+        "total_tokens": 458
+      },
+      {
+        "prompt_tokens": 658,
+        "completion_tokens": 161,
+        "total_tokens": 819
+      }
+    ]
+  },
+  "limitations": [
+    "Fixed development service identity, not OIDC or production tenant isolation",
+    "Finite vectors and supported pure-JSON tier, not arbitrary-code or full correctness assurance",
+    "Ephemeral host-memory signing key; no production KMS",
+    "API usage tokens are real; configured cost reservation is not invoiced dollars",
+    "Single synthetic sales task family; broader repository/business benchmark not established"
+  ],
+  "initial_abi_failure": {
+    "candidate_ref": "9534b116-d6e5-4f62-aa48-739f82ec18ba",
+    "version": "1.0.0",
+    "detected_by": "inert AST/entrypoint ABI inspection",
+    "declared_keyword_parameters": [
+      "records"
+    ],
+    "actual_parameters": [
+      "data"
+    ],
+    "source_executed": false,
+    "disposition": "keep quarantined; request model repair under new immutable version"
+  },
+  "generation": {
+    "model": "gpt-6-luna",
+    "task_id": "df701f2b-d799-4fb6-9230-4402f558dd76",
+    "state": "COMPLETED",
+    "model_calls": 3,
+    "tool_calls": 2,
+    "elapsed_seconds": 13.937,
+    "source_executed": false
+  },
+  "model_repair": {
+    "model": "gpt-6-luna",
+    "task_id": "69c241e6-7e87-4824-8d00-9149eb4da620",
+    "state": "COMPLETED",
+    "model_calls": 2,
+    "tool_calls": 1,
+    "elapsed_seconds": 11.156,
+    "source_executed": false
+  }
+}

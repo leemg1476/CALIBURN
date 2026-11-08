@@ -83,6 +83,7 @@ class Store:
         allow_capability_proposals=False,
         allow_capability_checks=False,
         allow_factory_execution=False,
+        allow_registry_invocation=False,
     ):
         body = request.model_dump(exclude={"idempotency_key"}, exclude_none=True)
         digest = hashlib.sha256(json.dumps(body, sort_keys=True).encode()).hexdigest()
@@ -158,6 +159,24 @@ class Store:
                 if workspace is not None and "request_review" in workspace["permissions"]:
                     t["policy"]["tools"].append("repo_request_review")
                     t["policy"]["review_tool_digest"] = REVIEW_TOOL_DIGEST
+                if allow_registry_invocation:
+                    from caliburn.tool_factory.release_contracts import release_digest
+                    from caliburn.tool_factory.release_service import ReleaseService
+
+                    registry = ReleaseService(self)
+                    names = request.capabilities
+                    pins = registry.select(c, names, actor, tenant)
+                    if pins:
+                        t["policy"].update(
+                            capabilities=pins,
+                            registry_digest=release_digest(),
+                            generated_code="qualified_internal_only",
+                        )
+                        t["policy"]["tools"] += list(pins)
+                elif request.capabilities:
+                    from caliburn.tool_factory.release_contracts import ReleaseDenied
+
+                    raise ReleaseDenied()
                 c.execute(insert(tasks).values(**t))
                 self._event(
                     c, t, "TASK_CREATED", {"input_sha256": digest, "policy": "m1-static-v1"}
@@ -469,7 +488,10 @@ class Store:
                     "attempt": step["attempts"],
                     "policy": "m1-static-v1",
                     "tool_digest": (
-                        EXEC_DIGEST
+                        t["policy"]["registry_digest"]
+                        if data.get("function", {}).get("name")
+                        in t["policy"].get("capabilities", {})
+                        else EXEC_DIGEST
                         if data.get("function", {}).get("name") in EXEC_INPUTS
                         else FACTORY_DIGEST
                         if data.get("function", {}).get("name") in INPUTS

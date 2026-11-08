@@ -722,3 +722,62 @@ Actual evidence: first-call-only stateful source passes old unittest but fails r
 Commands: `docker run -d --rm --name caliburn-properties-postgres -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGRES_DB=caliburn_test -p 127.0.0.1:55432:5432 postgres:17-alpine`; `docker build -f deploy/sandbox/Dockerfile.tests -t caliburn-sandbox:property-tests .`; set CALIBURN_TEST_DATABASE_URL to the disposable55432 DB and CALIBURN_REVIEWED_TEST_IMAGE to inspected immutable property-tests ID, with existing data/Git image variables for full regression. Focused `.venv/Scripts/python.exe -m pytest tests/test_factory_properties.py -q -x --junitxml=docs/evidence/m3-properties-focused.xml` →9passed/7DB-applicability skips/0failed,34.59s. Earlier final-source oracle/signing/static focused run17passed/10skipped/0failed,67.67s. Full `.venv/Scripts/python.exe -m pytest -q -ra --junitxml=docs/evidence/m3-properties-pytest.xml` is running on the stable root worktree; final result follows when terminal. Ruff/format144files/compile PASS. Driver source byte-match and UID10001 proved in property-image.json; image sha256:cd73f5c8d9a9cff3618f2bbfe646b24c78ffe0d0ab7fbc7b2234d2f8b9067d12, same Python base/no added package. No paid API calls; ledger remains3/745.
 
 Rollout/rollback: head0008 unchanged; immutable JSON and checker/execution/signing-policy digests change. New static report/plan/task/review/image binding required. Preserve evidence/images and drain incompatible work; never rewrite older grants or relabel old signatures as stronger qualification. Current new code remains local. Generalized random/metamorphic/invalid-input/SAST/dependency/license/adapters remain incomplete. Next code work is the supported-tier release/active version/invocation/reuse/revoke/rollback loop, with explicit criteria and independent release authority rather than self-promotion. The full regression snapshot is kept stable while subsequent registry implementation may use a separate local worktree.
+
+Full property regression terminal result: **309passed/89skipped/0failed**,690.61s,1 existing upstream TestClient warning. JUnit `evidence/m3-properties-pytest.xml` committed separately with the user's delegated-development-approval rule at1ac94ed. The skip count is environment/DB applicability; actual PostgreSQL and all three configured images ran. This closes the earlier “running” note, not a hosted CI claim.
+
+## M3.3b.1 / M3.4a — real generated Tool registration and reuse
+
+User steering: prioritize actual product behavior and evidence for a continue/stop decision. The user expressly canceled the blanket Never-self-approve rule and delegated development/internal-demo approvals to the trusted development agent. AGENTS.md and current security/Factory/plan guidance now reflect that instruction. Runtime/model output itself still has no control-plane privileges. Existing sandbox/hash/secret isolation is enforced; no repeated human approval is needed inside this delegation.
+
+Implemented in isolated codex/registry-reuse worktree: migration0009, separate internal release statements/signatures, immutable versions, scoped head/history, owner-configured reviewer/executor/signer mappings, live evidence/key/review checks, durable version-pinned invocation, actual separate-process Docker execution, output-contract quarantine, bounded lease recovery and nonce fencing, head rollback/revoke, API catalog/metrics, runtime tool advertisement and Open WebUI durable-chat consumer. API/worker opt-in is false by default; source has no host import. Actual approver is recorded; roles enforce runtime/control-plane separation without requiring another human chat approval for delegated development work. New dependencies: none. Open WebUI licensing/branding unchanged.
+
+Supported release tier: a single dependency/permission-free Python Tool with closed JSON ABI, inert AST/ABI inspection, independently owned tests and current host repeat/order/replay qualification. General MCP/Skill, arbitrary dependency/network/file/secret access, customer license clearance, production signing custody and enterprise OIDC remain unimplemented.
+
+### Live result (paid model, actual execution)
+
+Used `.env.apikey` only in the trusted model gateway; never printed, put in source/model messages or attached to a sandbox. Shared persistent paid budget remains capped100requests/50000input+output tokens. Actual cumulative usage: **17requests/21648tokens** including earlier smoke experiments; no estimated dollar price is asserted.
+
+Actual gpt-6-luna Taskdf701f2b generated monthly_region_sales@1.0.0 in13.937s (3model/2tool calls). Inert inspection found a real defect: entrypoint run(data) versus manifest keyword records, despite model-authored self-tests using the same incorrect ABI. No generated source executed at this point. Actual model repair Task69c241e6 produced new immutable1.0.1 in11.156s (2model/1tool calls). SourceSHA be206421371f5d22212b6c22f3964788d9b3f5d8f57b476a8867f3de2d20d5c4.
+
+The user explicitly approved review bindinged065b7e and conditional one-hour internal reuse of that source; the later delegation also allows development-agent decisions. Qualification Task9bafa973 actually resumed from WAITING_APPROVAL, called the test executor, and completed in12.266s. The separate process/fixed image ran5unittests and16host-checked observations in4fresh sessions, allPASSED. UID10001, read-only root, no socket, loopback-only interfaces, zero effective capabilities, no-new-privileges/seccomp,128MiB/32PID/0.5CPU bounds observed. Evidence remains production_approved=false/security INCOMPLETE/license UNREVIEWED. Internal release approval is a separate scope and does not relabel this evidence.
+
+Signed internal release726eea3a-f49b-4ab3-9b49-225b12fdd411 then served two new real-model Tasks, each2model/1tool calls: ea4d7178 → total14500 in7.688s; f729b7a6 → total950 in6.844s. Same immutable1.0.1/source/release, no regeneration. Sales rows are synthetic; inference/PostgreSQL/OS processes/Docker/signatures are real. Only one simple business task family is demonstrated, so broad autonomous coding quality or enterprise readiness is not established. Raw receipts are ignored under .caliburn/live-demo; sanitized durable evidence and inert source/manifest are in `evidence/live-factory-reuse.json` and `evidence/live-sales-tool/`.
+
+Real loopback HTTP verification started a short-lived uvicorn process with an ephemeral service token, read authenticated registry/metrics, both completed task histories and SSE REGISTERED_TOOL_QUEUED events, then terminated it. Unauthenticated catalog request401. No additional model calls; fixture provider was configured for read-only API access to the actual persisted real-model tasks. See `evidence/live-factory-http.json`.
+
+### Checks and commands
+
+Focused registry suite: **7passed/4skipped/0failed**,70.33s; all4skips are SQLite applicability for intentionally PostgreSQL control-plane roles. It exercises real release/signing + two new tasks, HTTP-ASGI catalog/auth/submission, pinned-version head moves, rollback/revoke, invalid-output quarantine, actual15s lease expiry, stale nonce refusal and cancellation. Model/principals in this regression are fixtures; Docker/DB/crypto are real. Full regression is running; terminal result follows below. Ruff check/format109files, compile, Node3tests, Compose config and offline wheel pass; all5release modules in the wheel byte-match the source. No separate static type checker or hosted CI on this new feature is claimed.
+
+Exact commands (PowerShell, from isolated registry worktree; `$python` is the root .venv/Scripts/python.exe):
+
+```powershell
+$python='C:/Users/LeeMyeonggyu/Documents/project/caliburn/.venv/Scripts/python.exe'
+$env:PYTHONPATH="$PWD/src"
+$env:CALIBURN_TEST_DATABASE_URL='postgresql+psycopg://postgres@127.0.0.1:55432/caliburn_test'
+docker build -f deploy/sandbox/Dockerfile.tests -t caliburn-sandbox:registry-tests .
+$env:CALIBURN_REVIEWED_TEST_IMAGE=(docker image inspect caliburn-sandbox:registry-tests --format '{{.Id}}')
+& $python -m pytest tests/test_registry_reuse.py -q -x --junitxml=docs/evidence/m3-registry-focused.xml
+$env:CALIBURN_SANDBOX_TEST_IMAGE=(docker image inspect caliburn-sandbox:m2 --format '{{.Id}}')
+$env:CALIBURN_GIT_TEST_IMAGE=(docker image inspect caliburn-sandbox:git-dev --format '{{.Id}}')
+& $python -m pytest -q -ra --junitxml=docs/evidence/m3-registry-pytest.xml
+& $python -m ruff check src tests migrations scripts
+& $python -m ruff format --check src tests migrations scripts
+& $python -m compileall -q src migrations scripts
+node --test tests/timeline_stream.test.mjs
+uv build --wheel --offline --out-dir .caliburn/package-check
+docker compose config --quiet
+# Live source generation and preparation commands are recorded in their scripts/ignored state.
+# Completion consumed the exact user-approved source/binding:
+$env:CALIBURN_DATABASE_URL='postgresql+psycopg://postgres@127.0.0.1:55432/caliburn_test?options=-csearch_path%3Dcaliburn_live_factory'
+& $python scripts/live_complete_reuse.py --root C:/Users/LeeMyeonggyu/Documents/project/caliburn --allow-paid
+& $python scripts/demo_registry_http.py --proof docs/evidence/live-factory-reuse.json --output docs/evidence/live-factory-http.json
+```
+
+The fixed registry image is sha256:c0d1ebeb59ec271b18254e39eb0fa83436f5f4744db38992270648419dfcfde1, same previously approved Python base, no added packages. Raw-byte implementation/driver digests bind this particular checkout/image; another checkout/newline convention must use its matching image and fresh qualification. Preserving the old proof does not grant the changed checkout new execution authority.
+
+Additional practical multi-stage proof: real-model Taskec6bf106 called monthly_region_sales twice for the two batches, then add_numbers using observed14500 and-950, and reported difference13550. Actual3model/3tool calls,12.389s DB-persisted elapsed; four total isolated reuse invocations across3newTasks. `scripts/live_compare_reports.py` initially read the persisted curated output envelope incorrectly during post-run export; the Task itself was COMPLETED with the correct receipt. Fixed export to parse output.content and exported the same completed Task with --task-id, without paying for a duplicate run. Evidence `evidence/live-business-comparison.json`. Final shared paid ledger **20requests/24596tokens**, no unresolved reservation. Command `& $python scripts/live_compare_reports.py --root C:/Users/LeeMyeonggyu/Documents/project/caliburn --proof docs/evidence/live-factory-reuse.json --output docs/evidence/live-business-comparison.json --allow-paid`; receipt re-export adds `--task-id ec6bf106-e3c3-480c-a46a-18207a0b9e8a`.
+
+Full-regression environment correction: initial full run used the main checkout's Git image, while this worktree has different CRLF bytes for git_runner/git_workspace. Current pinned-driver rejection correctly produced sandbox_execution_failed. Normalized source equality verified; no driver check was weakened. Built `caliburn-sandbox:registry-git-tests` FROM the already approved local git-dev image, COPY only the three maintained driver files, `docker build --network=none --pull=false -f .caliburn/Dockerfile.git-checkout-bytes -t caliburn-sandbox:registry-git-tests .`; no RUN/package/egress/permission additions. Immutable image/build-source hashes in `evidence/registry-checkout-images.json`. Re-ran `& $python -m pytest tests/test_git_boundary.py -q -x --tb=short --junitxml=docs/evidence/m3-registry-git-checkout.xml` with CALIBURN_GIT_TEST_IMAGE set to inspected corrected image: **11passed/4skipped/0failed**,20.65s. Initial full summary/final reconciliation follows when terminal.
+
+Migration/rollback:0009 adds9tables and scoped invoker triggers, no existing table rewrite. Enable only after upgrade/head and approved internal releases. Disable the server flag to stop new selections; cancel/drain in-flight work, revoke the release or rollback the head to an approved unrevoked version. Preserve artifacts/images. Ordinary rollback needs no schema downgrade. Downgrade0008 destroys new registry data and must be explicitly authorized after export. No production credential/KMS/daemon/egress or external write was installed. Next product priority is a broader practical coding/business benchmark, then M4 verified identity and scoped Credential Broker, followed by M5 memory/routing; avoid another documentation-only safety loop.

@@ -64,6 +64,7 @@ async def durable_completion(request, settings):
         allow_capability_proposals=settings.allow_capability_proposals,
         allow_capability_checks=settings.allow_capability_checks,
         allow_factory_execution=settings.allow_factory_execution,
+        allow_registry_invocation=settings.allow_registry_invocation,
     )
     if not request.stream:
         return completion(await wait(store, task), request.model)

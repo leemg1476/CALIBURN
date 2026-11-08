@@ -50,7 +50,7 @@ A coding task repeatedly needs to compare GitLab CI templates. If no matching to
 - Candidate and published namespaces are separate.
 - Code signing binds **source+dependencies+manifest+tests**, not just the name.
 - Tool identity and authentication are not interchangeable. Vault leases are bound to the signed tool digest.
-- No self-approval, no unsandboxed generated code, no automatic escalation of network/file/secret permissions.
+- Development/internal-demo approval is delegated to the trusted development agent, including its own proposals, by the user's explicit instruction. Record the actual approving actor and bound evidence. Runtime/model output cannot create control-plane approval. Generated code stays sandboxed; network/file/secret permissions do not automatically expand.
 - Rollbacks preserve prior versions and historical evidence.
 
 ## Implemented proposal increment (schema0005)
