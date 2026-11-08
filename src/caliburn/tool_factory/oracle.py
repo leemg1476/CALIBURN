@@ -10,6 +10,9 @@ from caliburn.sandbox.contracts import TestRun
 from caliburn.tool_factory.contracts import Contract, digest
 
 PLAN_FILE = "caliburn_host_oracle.json"
+SUITE = "repeat-order-replay-v1"
+SESSION_COUNT = 4
+REPETITIONS = 2
 
 
 class OracleCase(Contract):
@@ -19,7 +22,8 @@ class OracleCase(Contract):
 
 
 class OraclePlan(Contract):
-    version: Literal["host-oracle-v1"] = "host-oracle-v1"
+    version: Literal["host-oracle-v1", "host-oracle-v2"] = "host-oracle-v2"
+    profile: Literal["repeat-order-replay-v1"] = SUITE
     case_source: Literal["bundle_declared", "operator"] = "bundle_declared"
     entrypoint: str = Field(max_length=240)
     cases: list[OracleCase] = Field(min_length=1, max_length=8)
@@ -36,16 +40,36 @@ class OraclePlan(Contract):
 
 
 class OracleProof(Contract):
-    version: Literal["host-oracle-v1"] = "host-oracle-v1"
+    version: Literal["host-oracle-v1", "host-oracle-v2"] = "host-oracle-v2"
     plan_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
     total: int = Field(ge=1, le=8)
     checked: int = Field(ge=0, le=8)
     status: Literal["PASSED", "FAILED"]
+    profile: Literal["repeat-order-replay-v1"] | None = None
+    sessions_total: int = Field(default=0, ge=0, le=4)
+    sessions_checked: int = Field(default=0, ge=0, le=4)
+    observations_total: int = Field(default=0, ge=0, le=64)
+    observations_checked: int = Field(default=0, ge=0, le=64)
 
     @model_validator(mode="after")
     def consistent(self):
         if self.checked > self.total or (self.status == "PASSED" and self.checked != self.total):
             raise ValueError("Incomplete oracle proof")
+        if self.version == "host-oracle-v2" and (
+            self.profile != SUITE
+            or self.sessions_total != SESSION_COUNT
+            or self.observations_total != self.total * SESSION_COUNT * REPETITIONS
+            or self.sessions_checked > self.sessions_total
+            or self.observations_checked > self.observations_total
+            or (
+                self.status == "PASSED"
+                and (
+                    self.sessions_checked != self.sessions_total
+                    or self.observations_checked != self.observations_total
+                )
+            )
+        ):
+            raise ValueError("Incomplete repeat/order/replay proof")
         return self
 
 
@@ -100,7 +124,7 @@ def same(actual, expected):
     return actual == expected
 
 
-def require_proof(binding, isolation):
+def require_proof(binding, isolation, *, current=False):
     proof = OracleProof.model_validate(isolation.get("host_oracle"))
     child = TestRun.model_validate(isolation.get("child_test_run"))
     if (
@@ -113,8 +137,28 @@ def require_proof(binding, isolation):
         "oracle_cases"
     ):
         raise ValueError("Oracle evidence mismatch")
+    if (current or binding.get("version") == "factory-execution-v3") and (
+        binding.get("version") != "factory-execution-v3"
+        or proof.version != "host-oracle-v2"
+        or binding.get("oracle_profile") != SUITE
+        or binding.get("oracle_sessions") != proof.sessions_total
+        or binding.get("oracle_observations") != proof.observations_total
+    ):
+        raise ValueError("Repeat/order/replay evidence mismatch")
     return proof
 
 
 def plan_digest(plan):
     return digest(plan.model_dump())
+
+
+def sessions(plan):
+    """Four fresh sessions, each repeating every input twice in a bound order."""
+    if plan.version != "host-oracle-v2":
+        raise ValueError("Legacy plans require a new independent review")
+    forward = list(range(len(plan.cases)))
+    reverse = list(reversed(forward))
+    return [
+        [i for i in order for _ in range(REPETITIONS)]
+        for order in (forward, forward, reverse, reverse)
+    ]

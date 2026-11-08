@@ -48,3 +48,6 @@ tests/test_signed_evidence.py covers pure cryptographic corruption/algorithm/sco
 ## Execution bindingv2 oracle requirement
 
 New signatures and imports now require complete PASSED host-oracle proof, exact vector hash/count and successful actual child source/subset-plan evidence. v2 signed statements recompute the child-only subset hash from the full immutable plan. Actual child exit/output are preserved separately; aggregate run names the full reviewed host+child plan. Child exit0 under reporting tamper cannot alone become signed success. Historicalv1 evidence stays nonactivating, not silently upgraded or newly imported without complete proof. See HOST_ORACLE.md/ADR0014; no schema migration or production activation added.
+
+
+Bindingv3 adds mandatory repeat/order/replay proof for new publication/signatures/imports. Current policy requires host-oracle-v2/profile repeat-order-replay-v1 and exact4 sessions/8*N successful observations. Historicalv1/v2 nonactivating signatures retain original verification scope; they do not acquire new invocation authority. See PROPERTY_QUALIFICATION.md.

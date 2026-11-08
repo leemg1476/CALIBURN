@@ -38,3 +38,6 @@ An explicitly authorized real `gpt-6-luna` PostgreSQL/model/tool smoke completed
 
 
 Factory qualification now additionally uses [host-owned observations](docs/HOST_ORACLE.md): each approved input runs in a fresh isolated container and expected values stay in the trusted host comparator. Actual unittest reporting/exit0 attacks are rejected; complete host proof is required for durable PASSED evidence and new signatures. No SQL migration/permission growth; bindingv2 requires new plans/tasks/reviews and the updated reviewed-test image. Finite vectors do not establish complete security/behavior qualification or enable production reuse.
+
+
+The local qualification increment adds a fixed repeat/order/replay profile and normalized manifest-poison checks; see [property qualification](docs/PROPERTY_QUALIFICATION.md). It is separate from public90017e0, whose Linux CI passed296tests/86applicability skips. The next product priority is independently approved active versions and actual safe reuse; production/enterprise completion is not claimed.

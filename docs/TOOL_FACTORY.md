@@ -74,3 +74,6 @@ Real Ed25519 signatures now bind complete immutable candidate/static/independent
 ## Host-owned finite-vector comparison
 
 Approved unittest child exit0 no longer suffices for a new Factory PASSED receipt/signature. Host-controlled typed vector comparisons run against fresh isolated source/entrypoint/input containers, with expectations outside the subject and complete hash/count/source/subset-plan proof. Actual child reporting attacks are rejected by real PG/Docker tests. Defaults remain candidate-declared; operator vectors have separate provenance. This is an implemented anti-report-tamper subset, not complete property/SAST/poison/dependency/license qualification or executable registry admission. See HOST_ORACLE.md/ADR0014.
+
+
+Fixed repeat/order/replay qualification now runs through the actual host consumer (PROPERTY_QUALIFICATION.md/ADR0015). It does not finish all M3.2b adapters/security/dependency/license work. Next, close explicit qualification criteria for the first supported pure-JSON tier and build independent release → immutable active version → actual isolated invoke → cross-task evidence → revoke/rollback. Keep unqualified MCP/Skill/nonstdlib types quarantined until their own implemented adapters/gates exist.

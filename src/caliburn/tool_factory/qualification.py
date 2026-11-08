@@ -19,7 +19,15 @@ from caliburn.tool_factory.contracts import (
     matches,
 )
 from caliburn.tool_factory.execution_contracts import EXEC_DIGEST, ExecutionAdmission
-from caliburn.tool_factory.oracle import PLAN_FILE, OraclePlan, plan_digest, read_plan
+from caliburn.tool_factory.oracle import (
+    PLAN_FILE,
+    REPETITIONS,
+    SESSION_COUNT,
+    SUITE,
+    OraclePlan,
+    plan_digest,
+    read_plan,
+)
 from caliburn.tool_factory.schema import (
     bundles,
     check_jobs,
@@ -299,10 +307,16 @@ class Qualification:
         if files.digest() != plan["sha256"]:
             raise FactoryDenied()
         oracle = read_plan(files.files)
-        if oracle.entrypoint != bundle["payload"]["manifest"]["entrypoint"]:
+        if (
+            oracle.entrypoint != bundle["payload"]["manifest"]["entrypoint"]
+            or oracle.version != "host-oracle-v2"
+        ):
             raise FactoryDenied()
         binding = {
-            "version": "factory-execution-v2",
+            "version": "factory-execution-v3",
+            "oracle_profile": SUITE,
+            "oracle_sessions": SESSION_COUNT,
+            "oracle_observations": len(oracle.cases) * SESSION_COUNT * REPETITIONS,
             "oracle_sha256": plan_digest(oracle),
             "oracle_cases": len(oracle.cases),
             "scope": "factory_sandbox_test_only",

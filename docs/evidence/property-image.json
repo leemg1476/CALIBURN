@@ -1,0 +1,10 @@
+{
+  "image": "sha256:cd73f5c8d9a9cff3618f2bbfe646b24c78ffe0d0ab7fbc7b2234d2f8b9067d12",
+  "actual": {
+    "uid": 10001,
+    "driver_sha256": "f70bf4d256f4fb5711140f4df2d7071a9915898a115483918a37ff2854d33db5"
+  },
+  "source_byte_match": true,
+  "new_dependencies": [],
+  "customer_clearance": false
+}

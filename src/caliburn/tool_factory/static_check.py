@@ -2,9 +2,36 @@
 
 import ast
 import re
+import unicodedata
 
 from caliburn.runtime.redaction import contains_secret
 from caliburn.tool_factory.contracts import CapabilityBundle, digest
+
+
+def instruction_override(text):
+    normalized = "".join(
+        c for c in unicodedata.normalize("NFKC", text).casefold() if unicodedata.category(c) != "Cf"
+    )
+    return (
+        re.search(
+            r"ignore\s+(?:all\s+)?(?:previous|prior|system|policy)|approve\s+yourself|bypass\s+(?:approval|policy)|"
+            r"(?:이전|상위|시스템|보안|승인)(?:\s*(?:지시|명령|규칙|정책|절차))?\s*(?:을|를)?\s*(?:무시|우회|해제)|"
+            r"(?:스스로|자체적으로)\s*승인",
+            normalized,
+        )
+        is not None
+    )
+
+
+def manifest_texts(value, path="manifest"):
+    if isinstance(value, str):
+        yield path[:250], value
+    elif isinstance(value, dict):
+        for key, child in value.items():
+            yield from manifest_texts(child, path + "." + key)
+    elif isinstance(value, list):
+        for i, child in enumerate(value):
+            yield from manifest_texts(child, path + f"[{i}]")
 
 
 def analyze(payload, checker_sha256, secrets=()):
@@ -24,13 +51,13 @@ def analyze(payload, checker_sha256, secrets=()):
         finding("permission_review_required")
     if bundle.dependency_lock:
         finding("dependency_audit_required")
-    texts = {"manifest": bundle.manifest.description} | bundle.sources | bundle.tests
+    # Keep namespaces separate: a source file named 'manifest' cannot shadow metadata.
+    for path, text in manifest_texts(bundle.manifest.model_dump()):
+        if instruction_override(text):
+            finding("instruction_override_pattern", path)
+    texts = bundle.sources | bundle.tests
     for path, source in texts.items():
-        if re.search(
-            r"ignore\s+(?:all\s+)?(?:previous|prior|system|policy)|approve\s+yourself|bypass\s+(?:approval|policy)",
-            source,
-            re.IGNORECASE,
-        ):
+        if instruction_override(source):
             finding("instruction_override_pattern", path)
         if not path.endswith(".py"):
             continue

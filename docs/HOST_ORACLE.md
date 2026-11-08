@@ -41,3 +41,8 @@ This checks finite observed JSON behavior independently of unittest reporting. I
 ## Rollout and rollback
 
 No SQL migration; Alembic head remains0008. New implementation/policy digests and bindingv2 require a new task, plan, image binding and independent decision. Legacy plans without oracle metadata fail closed rather than auto-upgrade. Stop/drain granted work before deploying changed pinned code. Preserve old source/plans/receipts/images; no automatic production daemon or grant was created. Roll back compatible code/image and new admissions together, retaining evidence; do not reinterpret v2 approvals as v1 or rewrite historical records. Customer rollout still requires the existing release gates.
+
+
+## Stronger new-plan profile
+
+New plans now use host-oracle-v2 / execution bindingv3, with a fixed repeat/order/fresh-session replay profile. The earlier single-call descriptions above are historicalv2 scope, not a claim that new execution still dispatches one fresh container per vector. Current behavior and remaining gates: PROPERTY_QUALIFICATION.md/ADR0015. Historical nonactivating evidence remains readable; new publication/signatures require the stronger profile.

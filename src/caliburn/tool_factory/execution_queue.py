@@ -248,7 +248,7 @@ class ExecutionQueue:
                 run = TestRun.model_validate(result.data)
                 if run.status == "PASSED":
                     try:
-                        proof = require_proof(admitted["binding"], result.isolation)
+                        proof = require_proof(admitted["binding"], result.isolation, current=True)
                     except ValueError as exc:
                         raise FactoryDenied() from exc
                     if proof.status != "PASSED":

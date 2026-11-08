@@ -55,11 +55,11 @@ class EvidenceStatement(Contract):
         run = self.execution_result.data
         binding = self.execution_binding
         if (
-            binding.get("version") == "factory-execution-v2"
+            binding.get("version") in {"factory-execution-v2", "factory-execution-v3"}
             and require_proof(binding, self.execution_result.isolation).status != "PASSED"
         ):
             raise ValueError("Independent oracle did not pass")
-        if binding.get("version") == "factory-execution-v2" and Bundle(
+        if binding.get("version") in {"factory-execution-v2", "factory-execution-v3"} and Bundle(
             files={k: v for k, v in self.plan_files.items() if k != PLAN_FILE}
         ).digest() != binding.get("child_plan_sha256"):
             raise ValueError("Child plan mismatch")

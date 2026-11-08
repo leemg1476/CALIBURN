@@ -131,3 +131,8 @@ A distinct owner-configured signer role/process consumes completed actual Factor
 ## Host-owned Factory comparison (execution bindingv2)
 
 ADR0014 places the behavior comparator in the existing trusted host executor, outside every subject container/PID namespace. Existing owner-controlled plan JSON binds host-only expected vectors and a separate child test-plan subset. Every invocation uses a fresh inspected/approved container with only immutable source/entrypoint/input; expected values and pass authority never enter it. The durable consumer and signer reject incomplete/mismatched host proof. Actual child exit/output/hash remain separate from aggregate full-plan evidence. No schema migration, new role/permission or host-source execution. Finite observations are not full adversarial/security/release qualification; see HOST_ORACLE.md.
+
+
+## Repeat/order/replay and registry direction
+
+ADR0015 extends the host-owned comparator to four fresh sessions and two calls per vector, preserving separate owner/reviewer/executor boundaries and bounded budgets. Bindingv3/host-oracle-v2 require complete session/observation proof for new durable PASSED/signatures. Normalized all-manifest-string triage fixes metadata/source namespace shadowing and selected obfuscated override patterns. No schema migration or activation is added by this increment. The next product slice is independent supported-tier release, immutable active version selection, actual scoped invocation/reuse and rollback, not indefinite additions to evidence-only gates. PROPERTY_QUALIFICATION.md records exact scope.

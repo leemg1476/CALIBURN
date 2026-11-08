@@ -321,7 +321,7 @@ class ArtifactRegistry:
             facts, authors = self.snapshot(c, job_id)
             if (
                 require_proof(
-                    facts["execution_binding"], facts["execution_result"]["isolation"]
+                    facts["execution_binding"], facts["execution_result"]["isolation"], current=True
                 ).status
                 != "PASSED"
             ):
@@ -362,7 +362,9 @@ class ArtifactRegistry:
     def _insert(self, c, envelope):
         statement = envelope.statement
         if (
-            require_proof(statement.execution_binding, statement.execution_result.isolation).status
+            require_proof(
+                statement.execution_binding, statement.execution_result.isolation, current=True
+            ).status
             != "PASSED"
         ):
             raise ArtifactDenied()

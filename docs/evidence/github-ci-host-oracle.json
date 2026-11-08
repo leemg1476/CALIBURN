@@ -1,0 +1,20 @@
+{
+  "commit": "90017e0f8d57e415fc8225be04c959141f590a12",
+  "run_url": "https://github.com/leemg1476/CALIBURN/actions/runs/42482647059",
+  "job_id": 128737739874,
+  "conclusion": "success",
+  "pytest": {
+    "passed": 296,
+    "skipped": 86,
+    "failed": 0,
+    "seconds": 247.37,
+    "warnings": 1
+  },
+  "demos": [
+    "real HTTP/PostgreSQL/SSE replay",
+    "separate worker/supervisor/container workspace",
+    "task-local Git checkout/staged diff"
+  ],
+  "inference": "scripted/offline fixture; no paid calls",
+  "scope": "published90017e0 only; not the later local bindingv3 property changes"
+}

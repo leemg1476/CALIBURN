@@ -120,13 +120,21 @@ async def test_real_independent_vectors_and_expected_values_stay_on_host(
     monkeypatch.setattr(FactoryTestExecutor, "payload", capture_tests)
     assert await Supervisor(ExecutionQueue(executor_store), FactoryTestExecutor(IMAGE)).run_once()
     await asyncio.wait_for(worker, 15)
-    assert len(payloads) == 2
-    assert all(set(p) == {"files", "source_sha256", "entrypoint", "input"} for p in payloads)
+    assert len(payloads) == 4
+    assert all(set(p) == {"files", "source_sha256", "entrypoint", "inputs"} for p in payloads)
+    assert (
+        payloads[0]["inputs"]
+        == payloads[1]["inputs"]
+        == [cases[0]["input"], cases[0]["input"], cases[1]["input"], cases[1]["input"]]
+    )
+    assert payloads[2]["inputs"] == payloads[3]["inputs"] == list(reversed(payloads[0]["inputs"]))
     with durable.engine.connect() as c:
         result = c.execute(select(exec_jobs.c.result)).scalar_one()
     assert result["data"]["run"]["status"] == "PASSED"
     proof = result["isolation"]["host_oracle"]
     assert proof["status"] == "PASSED" and proof["checked"] == proof["total"] == 2
+    assert proof["sessions_checked"] == proof["sessions_total"] == 4
+    assert proof["observations_checked"] == proof["observations_total"] == 16
     assert durable.get(tid)["state"] == "COMPLETED"
 
 

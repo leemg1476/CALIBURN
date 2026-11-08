@@ -15,11 +15,15 @@ from caliburn.sandbox.control import DockerExecutor, SandboxFailure, Supervisor
 from caliburn.tool_factory.execution_queue import ExecutionQueue
 from caliburn.tool_factory.oracle import (
     PLAN_FILE,
+    REPETITIONS,
+    SESSION_COUNT,
+    SUITE,
     OracleProof,
     parse_json,
     plan_digest,
     read_plan,
     same,
+    sessions,
 )
 from caliburn.tool_factory.qualification import Qualification
 from caliburn.tool_factory.service import FactoryDenied
@@ -48,7 +52,7 @@ class OracleExecutor(DockerExecutor):
                 "files": job["source_files"],
                 "source_sha256": job["binding"]["source_sha256"],
                 "entrypoint": job["oracle_entrypoint"],
-                "input": job["oracle_input"],
+                "inputs": job["oracle_inputs"],
             },
             ensure_ascii=True,
             allow_nan=False,
@@ -56,7 +60,12 @@ class OracleExecutor(DockerExecutor):
 
     def validate(self, job, raw):
         observed = parse_json(raw)
-        if not isinstance(observed, dict) or set(observed) != {"value"}:
+        if (
+            not isinstance(observed, dict)
+            or set(observed) != {"values"}
+            or not isinstance(observed["values"], list)
+            or len(observed["values"]) != len(job["oracle_inputs"])
+        ):
             raise SandboxFailure("invalid_oracle_observation")
         return Result(ok=True, data=observed)
 
@@ -81,19 +90,42 @@ class FactoryTestExecutor(DockerExecutor):
                 fingerprint = plan_digest(plan)
                 if fingerprint != job["binding"]["oracle_sha256"]:
                     raise SandboxFailure("oracle_plan_mismatch")
-                checked = 0
+                counts = [0] * len(plan.cases)
+                complete_sessions = 0
+                observations = 0
                 oracle = OracleExecutor(self)
-                for case in plan.cases:
+                for order in sessions(plan):
                     # Never send the plan, tests, expected value or pass bit to the subject.
                     observed = await oracle.execute(
-                        job | {"oracle_entrypoint": plan.entrypoint, "oracle_input": case.input}
+                        job
+                        | {
+                            "oracle_entrypoint": plan.entrypoint,
+                            "oracle_inputs": [plan.cases[i].input for i in order],
+                        }
                     )
-                    if not observed.ok or not same(observed.data["value"], case.expected):
+                    if not observed.ok:
                         break
-                    checked += 1
-                status = "PASSED" if checked == len(plan.cases) else "FAILED"
+                    for i, actual in zip(order, observed.data["values"], strict=True):
+                        if not same(actual, plan.cases[i].expected):
+                            break
+                        counts[i] += 1
+                        observations += 1
+                    else:
+                        complete_sessions += 1
+                        continue
+                    break
+                checked = sum(n == SESSION_COUNT * REPETITIONS for n in counts)
+                status = "PASSED" if complete_sessions == SESSION_COUNT else "FAILED"
                 result.isolation["host_oracle"] = OracleProof(
-                    plan_sha256=fingerprint, total=len(plan.cases), checked=checked, status=status
+                    plan_sha256=fingerprint,
+                    total=len(plan.cases),
+                    checked=checked,
+                    status=status,
+                    profile=SUITE,
+                    sessions_total=SESSION_COUNT,
+                    sessions_checked=complete_sessions,
+                    observations_total=len(plan.cases) * SESSION_COUNT * REPETITIONS,
+                    observations_checked=observations,
                 ).model_dump()
                 if status == "FAILED":
                     # Preserve the actual child exit; never invent a failing exit code.
