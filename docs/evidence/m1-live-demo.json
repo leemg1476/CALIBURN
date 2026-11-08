@@ -1,0 +1,23 @@
+{
+  "transport": "real HTTP sockets",
+  "inference": "offline fixture (mock)",
+  "persistence": "PostgreSQL",
+  "task_id": "2a624805-a1b5-4386-89ae-b990f8f1b1cf",
+  "state": "COMPLETED",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "sse_prefix": [
+    1,
+    2,
+    3
+  ],
+  "sse_reconnected": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "verified_sum": 5.0
+}

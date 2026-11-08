@@ -1,0 +1,71 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: caliburn
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "${CALIBURN_DB_ADMIN_PASSWORD:?Set CALIBURN_DB_ADMIN_PASSWORD}"
+      CALIBURN_RUNTIME_DB_PASSWORD: "${CALIBURN_DB_PASSWORD:?Set CALIBURN_DB_PASSWORD}"
+    volumes:
+      - caliburn_pg_data:/var/lib/postgresql/data
+      - ./deploy/001-runtime-role.sh:/docker-entrypoint-initdb.d/001-runtime-role.sh:ro
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U postgres -d caliburn]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+    networks: [runtime]
+  migrate:
+    build: .
+    command: [alembic, upgrade, head]
+    environment:
+      CALIBURN_DATABASE_URL: "postgresql+psycopg://postgres:${CALIBURN_DB_ADMIN_PASSWORD:?Set CALIBURN_DB_ADMIN_PASSWORD}@postgres:5432/caliburn"
+      CALIBURN_PROVIDER: fixture
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [runtime]
+  caliburn-api:
+    build: .
+    ports: ["127.0.0.1:8000:8000"]
+    environment: &runtime_env
+      CALIBURN_DATABASE_URL: "postgresql+psycopg://caliburn:${CALIBURN_DB_PASSWORD:?Set CALIBURN_DB_PASSWORD}@postgres:5432/caliburn"
+      CALIBURN_API_TOKEN: "${CALIBURN_API_TOKEN:?Set CALIBURN_API_TOKEN}"
+      CALIBURN_PROVIDER: "${CALIBURN_PROVIDER:-fixture}"
+      CALIBURN_MODEL: "${CALIBURN_MODEL:-caliburn-agent}"
+      CALIBURN_UPSTREAM_MODEL: "${CALIBURN_UPSTREAM_MODEL:-not-configured}"
+      CALIBURN_UPSTREAM_BASE_URL: "${CALIBURN_UPSTREAM_BASE_URL:-http://host.docker.internal:8001/v1}"
+      CALIBURN_UPSTREAM_API_KEY: "${CALIBURN_UPSTREAM_API_KEY:-}"
+      CALIBURN_ALLOW_COMMERCIAL_FALLBACK: "false"
+      CALIBURN_MODEL_CALL_COST: "${CALIBURN_MODEL_CALL_COST:-0}"
+      CALIBURN_MAX_OUTPUT_TOKENS: "${CALIBURN_MAX_OUTPUT_TOKENS:-1024}"
+      CALIBURN_TASK_MAX_COST: "${CALIBURN_TASK_MAX_COST:-0}"
+      CALIBURN_ALLOW_CAPABILITY_PROPOSALS: "${CALIBURN_ALLOW_CAPABILITY_PROPOSALS:-false}"
+      CALIBURN_ALLOW_CAPABILITY_CHECKS: "${CALIBURN_ALLOW_CAPABILITY_CHECKS:-false}"
+      CALIBURN_ALLOW_FACTORY_EXECUTION: "${CALIBURN_ALLOW_FACTORY_EXECUTION:-false}"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    networks: [runtime]
+  worker:
+    build: .
+    command: [python, -m, caliburn.runtime.worker]
+    environment: *runtime_env
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
+    networks: [runtime]
+networks:
+  runtime:
+    internal: true
+volumes:
+  caliburn_pg_data:

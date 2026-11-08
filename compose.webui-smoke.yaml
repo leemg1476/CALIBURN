@@ -1,0 +1,36 @@
+# Optional isolated development smoke profile. No upstream UI source/branding changes.
+services:
+  open-webui:
+    image: openwebui/open-webui@sha256:283efb20756785229a388bcd1e56a052f5284ae8c861717eed5eaaa3bba6b20a
+    profiles: [webui-smoke]
+    ports: ["127.0.0.1:8088:8080"]
+    environment:
+      OPENAI_API_BASE_URL: http://caliburn-api:8000/v1
+      OPENAI_API_KEY: "${CALIBURN_API_TOKEN:?Set CALIBURN_API_TOKEN}"
+      WEBUI_SECRET_KEY: "${CALIBURN_WEBUI_SESSION_SECRET:?Set test-only session secret}"
+      WEBUI_AUTH: "false"
+      ENABLE_PERSISTENT_CONFIG: "false"
+      ENABLE_OLLAMA_API: "false"
+      ENABLE_OPENAI_API: "true"
+      DEFAULT_MODELS: caliburn-agent-durable
+      DEFAULT_LOCALE: en-US
+      OFFLINE_MODE: "true"
+      HF_HUB_OFFLINE: "1"
+      ENABLE_CODE_EXECUTION: "false"
+      ENABLE_CODE_INTERPRETER: "false"
+      ENABLE_DIRECT_CONNECTIONS: "false"
+      ENABLE_DIRECT_INTEGRATIONS: "false"
+      ENABLE_WEB_SEARCH: "false"
+      ENABLE_IMAGE_GENERATION: "false"
+      ENABLE_RAG_WEB_SEARCH: "false"
+      SCARF_NO_ANALYTICS: "true"
+      DO_NOT_TRACK: "true"
+    volumes: [caliburn_webui_smoke_data:/app/backend/data]
+    depends_on:
+      caliburn-api:
+        condition: service_started
+    networks: [runtime]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+volumes:
+  caliburn_webui_smoke_data:

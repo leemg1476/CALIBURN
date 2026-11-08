@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CALIBURN — 실행 기록</title>
+  <link rel="stylesheet" href="/tasks/assets/timeline.css">
+  <script type="module" src="/tasks/assets/timeline.mjs"></script>
+</head>
+<body>
+  <header class="masthead"><a href="/tasks/ui" class="brand">CALIBURN<span>실행 기록</span></a><span class="environment">DEVELOPMENT / 단일 서비스</span></header>
+  <main>
+    <section class="intro"><div><p class="eyebrow">TASK OBSERVATORY</p><h1>작업의 모든 단계를<br><em>근거와 함께.</em></h1></div><p class="intro-copy">진행 상황, 도구 호출과 복구 이력을 확인합니다.<br>연결이 끊겨도 마지막 이벤트부터 이어집니다.</p></section>
+    <form id="connect-form" class="connection" autocomplete="off">
+      <label>Task ID<input id="task-id" name="task-id" placeholder="작업 UUID" required spellcheck="false" autocomplete="off"></label>
+      <label>서비스 토큰<input id="token" type="password" placeholder="이 연결에서만 사용" required autocomplete="off" spellcheck="false"></label>
+      <button id="connect" type="submit" class="primary">작업 연결 <span aria-hidden="true">↗</span></button>
+      <button id="disconnect" type="button" disabled>연결 해제</button>
+    </form>
+    <div class="connection-line"><span id="connection-state" role="status" aria-live="polite">연결 전</span><span>토큰과 작업 내용은 브라우저 저장소에 저장하지 않습니다.</span></div>
+    <p id="notice" class="notice" role="alert" hidden></p>
+    <section id="workspace" hidden>
+      <div class="task-heading"><div><p class="eyebrow">CURRENT TASK</p><h2 id="prompt"></h2><p id="task-ref" class="mono muted"></p></div><span id="task-state" class="badge" role="status" aria-live="polite"></span></div>
+      <div class="metrics" aria-label="작업 예산"><div><span>모델 호출</span><strong id="model-count">—</strong></div><div><span>도구 호출</span><strong id="tool-count">—</strong></div><div><span>예약 토큰</span><strong id="token-count">—</strong></div><div><span>예약 비용</span><strong id="cost-count">—</strong><small>실제 청구액과 다를 수 있습니다</small></div></div>
+      <div class="toolbar"><p id="deadline" class="muted"></p><div><button id="pause" type="button" disabled>일시정지</button><button id="resume" type="button" disabled>재개</button><button id="cancel" type="button" class="danger" disabled>작업 취소</button></div></div>
+      <div class="columns">
+        <div class="main-column">
+          <section class="panel"><div class="section-heading"><h3>실행 단계</h3><span id="step-count" class="mono muted">0 STEPS</span></div><ol id="steps" class="step-list"></ol><p id="no-steps" class="empty">워커가 작업을 시작하면 단계가 표시됩니다.</p><button id="more-history" type="button" hidden>추가 이력 불러오기</button></section>
+          <section class="panel"><div class="section-heading"><h3>결과</h3><span id="result-state" class="muted">진행 대기</span></div><pre id="result" class="result">아직 결과가 없습니다.</pre></section>
+          <section class="panel"><div class="section-heading"><h3>이벤트 기록</h3><span id="event-count" class="mono muted">0 EVENTS</span></div><ol id="events" class="event-list"></ol><p class="footnote">최대 최근 250개를 표시합니다. 이벤트 내용은 실행 지시가 아닌 관찰 기록입니다.</p></section>
+        </div>
+        <aside>
+          <section class="panel"><div class="section-heading"><h3>실행·복구</h3></div><ol id="runs" class="run-list"></ol><p id="no-runs" class="empty">할당된 워커가 없습니다.</p></section>
+          <section class="panel"><div class="section-heading"><h3>독립 검토</h3></div><div id="reviews"></div><p id="no-reviews" class="empty">검토 요청이 없습니다.</p><p class="footnote">검토 결정은 별도 검토자 경로에서 처리합니다. 일반 재개는 승인을 대신하지 않습니다.</p></section>
+          <div class="ledger-note"><span class="ledger-mark" aria-hidden="true">C /</span><p>관찰 가능한 자율 실행.<br>변경에는 기록을,<br>결과에는 근거를.</p></div>
+        </aside>
+      </div>
+    </section>
+    <section id="welcome" class="welcome"><span class="mono">01 — CONNECT</span><p>기존 작업의 Task ID로 연결하세요.<br>이벤트 이력과 현재 상태를 함께 불러옵니다.</p><span class="signal" aria-hidden="true">▁ ▃ ▅ ▂ ▆ ▄ ▁</span></section>
+  </main>
+  <footer>CALIBURN / 실행 콘솔 <span>Task · Run · Step · Event</span></footer>
+</body>
+</html>

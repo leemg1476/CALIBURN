@@ -1,0 +1,37 @@
+# CALIBURN
+
+CALIBURN is an enterprise autonomous agent platform under development, with a replaceable Open WebUI adapter. It is not a finished Codex-equivalent or commercially cleared product.
+
+The running M1 backend provides PostgreSQL durable tasks, a separate async worker and persisted queue, fenced leases/heartbeat, crash recovery, model/tool checkpoints, pause/cancel/resume, bounded calls/time/token/cost reservations, append-only events and SSE replay. The OpenAI-compatible `caliburn-agent-durable` model submits work through this runtime. `caliburn-agent` retains the original non-durable M0 chat path.
+
+The `fixture` provider is deterministic **mock inference**. Arithmetic/clock tools, PostgreSQL, migrations, worker and SSE are real. Source execution requires the separate reviewed-test path described below; arbitrary host shell access is unavailable. A real OpenAI-compatible upstream adapter exists, but no paid inference was used in recorded validation and no commercial fallback occurs.
+
+Start with [M1 runbook](docs/M1_RUNTIME.md) for local/Compose commands, API contracts, migrations and rollback. See [DEV_PROGRESS](docs/DEV_PROGRESS.md) for exact checks, results and remaining work; [implementation plan](docs/IMPLEMENTATION_PLAN.md) for work units; [ADR 0001](docs/adr/0001-durable-runtime.md) for queue/checkpoint decisions.
+
+M2 adds a real data-only per-request container, immutable scoped/expiring workspace snapshots, committed local Git import, and typed list/read/search/inert-patch tools consumed by the durable worker. See [M2 workspace runbook](docs/M2_WORKSPACES.md). No generated source or repository test is executable through this runner.
+
+Candidate review now persists exact source/plan/image/tool hashes, pauses actual tasks, requires an independently mapped PostgreSQL reviewer role and resumes a new worker after a valid decision. Rejection, revocation, expiry and self-approval denial are implemented. [Review runbook](docs/CANDIDATE_REVIEW.md) explains the operator/reviewer CLI and migration 0003. A separate opt-in execution grant/supervisor now runs reviewed stdlib unittest plans against baseline/candidate in two fresh isolated containers and returns actual evidence to the worker. See [execution runbook](docs/REVIEWED_TESTS.md). Defaults remain data-only; recorded inference/reviewer/source are synthetic fixtures.
+
+New Factory proposal slice: opt-in durable worker exact lookup and immutable source/test/manifest/fixture/dependency/SBOM/license candidate storage, with authenticated inspection, crash recovery and cross-task reference reuse. Candidates remain QUARANTINED; proposal alone cannot execute or activate them. A separately reviewed sandbox-test path is now implemented below. See [proposal runbook](docs/CAPABILITY_PROPOSALS.md) and migration0005.
+
+Not built: agent-contained original-history Git checkout, real-model/repository repair benchmark and production execution qualification, semantic gap classification, independently qualified/signed/approved capability registry and invocation reuse, enterprise approval service, OIDC/Vault, evaluated long-term memory/skills, policy-aware hybrid routing, customer SBOM/legal clearance or embedded Open WebUI task navigation. Authentication is a fixed single-service development identity, not enterprise tenant isolation. Token/cost fields represent conservative reservations rather than verified vendor billing.
+
+Open WebUI remains a separately reviewed external component. Connect `/v1`, select `caliburn-agent-durable`, and use normal chat streaming or nonstreaming completion. Task SSE uses `/api/v1/tasks/{id}/events`; the API response supplies the task/event references. Actual pinned Open WebUI browser smoke is verified with fixture inference; the independent task console is now implemented; embedded upstream navigation remains pending. See [smoke runbook](docs/OPEN_WEBUI_SMOKE.md). No upstream source or branding was changed; consult [license constraints](docs/LICENSING_AND_IP.md) before customer redistribution or branding changes.
+
+Requires Python 3.12+ and PostgreSQL for the deployed runtime. SQLite is retained for M0 metadata and selected unit tests; it does not validate production queue concurrency. Read `AGENTS.md`, `INIT.md`, `prompts/CODEX_START.md` and the design documents before development. 한국어 프로젝트 개요: [PROJECT_OVERVIEW_KO](docs/PROJECT_OVERVIEW_KO.md).
+
+Parent-based repair now preserves immutable candidate ancestry and requires new independent approval per changed hash. Actual fixture tests show failed candidate → repair → retest pass, plus rejection and cumulative-budget denial. See [repair runbook](docs/REPAIR_LOOP.md) and migration 0004; this does not establish live-model coding quality.
+
+An operator can now create an actual isolated task Git checkout and staged candidate diff from the granted snapshot via [checkout CLI](docs/TASK_CHECKOUT.md). Its deterministic baseline is reconstructed from scoped files; original history is not cloned. This adds no agent host-shell privilege and does not complete agent-contained Git checkout or the real-model benchmark.
+
+The fixed-image `repo_git_status` consumer now has an explicitly approved Git development image and actual PostgreSQL/worker/Git Docker qualification. Git2.47.3 and118 installed packages are recorded; customer redistribution remains unapproved. See [exact build/qualification proposal](docs/GIT_DATA_APPROVAL.md); default workspaces gain no permission.
+
+The independent [task console](docs/TASK_CONSOLE.md) at `/tasks/ui` now displays actual steps/runs/events, budgets/results/review states and pause/resume/cancel, with authenticated SSE reconnect. Actual PostgreSQL/browser/worker and literal-text security checks are verified. It uses existing development service identity; OIDC and embedded Open WebUI navigation remain open.
+
+Independent Factory static triage now runs through a durable request, separate configured verifier role/OS process and immutable report consumed by the runtime worker. Reports always remain incomplete/nonexecutable/nonactivatable. It is not generated behavior/security qualification or an active capability registry. See [static triage runbook](docs/FACTORY_STATIC_CHECKS.md); additive migration0006 and independent default-off grant.
+
+Factory execution now has a separate default-off grant, independent reviewer/executor roles, hash-bound plans/waits and actual stdlib Python container test evidence. Passing tests never activate a candidate. [Execution runbook](docs/FACTORY_EXECUTION.md)/ADR0012/migration0007 describe scope, commands, shared trigger lookup hardening and rollback. MCP/Skill/nonstdlib execution, comprehensive qualification and active registry remain open.
+
+Independent Ed25519 signing now binds complete candidate and actual execution evidence, with distinct signer role/process, public API/cross-task lookup verification and live revocation. Artifacts stay EVIDENCE_ONLY and cannot activate or execute. See [signed evidence](docs/SIGNED_EVIDENCE.md), ADR0013 and migration0008.
+
+An explicitly authorized real `gpt-6-luna` PostgreSQL/model/tool smoke completed two dependent arithmetic calls (47), using3 requests/745 input+output tokens under the user's50,000-token/100-request cap. See [live validation](docs/LIVE_MODEL_VALIDATION.md). Ordinary pytest inference remains mocked; this is not a real-repository quality benchmark. Credentials are loaded only through an explicit ignored API-file path.

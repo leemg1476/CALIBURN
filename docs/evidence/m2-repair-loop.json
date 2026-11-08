@@ -1,0 +1,196 @@
+{
+  "fixtures": [
+    "model inference",
+    "reviewer identity",
+    "source/test plan"
+  ],
+  "actual": [
+    "PostgreSQL",
+    "two independent role decisions",
+    "data/test containers",
+    "durable worker loop"
+  ],
+  "state": "COMPLETED",
+  "model_calls": 7,
+  "tool_calls": 6,
+  "first_review": {
+    "id": "60fe761c-a65a-4c53-9791-dc0d2ce4fa1c",
+    "binding": {
+      "version": "sandbox-review-v3",
+      "scope": "sandbox_test_only",
+      "execution_permitted": true,
+      "task_id": "1ad77a7d-f8d4-45f4-9f7b-41f29720a153",
+      "actor": "development-service",
+      "tenant": "development",
+      "workspace_ref": "c248318a-fdb3-42e0-a70b-5bd54f98e273",
+      "base_sha256": "2453789946ad3b62630ad0d11d47280b7f0d281df0bc468b86f37936b2f9a794",
+      "candidate_ref": "96c4ab49-b253-4043-bc3c-4ff326cac954",
+      "parent_candidate_ref": null,
+      "patch_source_sha256": "2453789946ad3b62630ad0d11d47280b7f0d281df0bc468b86f37936b2f9a794",
+      "candidate_sha256": "746acbeefb970ee1c35b44e63e85316422a65c83c4c5415fe6c54eca63b37e27",
+      "plan_ref": "c574868f-0e20-49fa-8e01-584e15b28071",
+      "plan_sha256": "22089911964453ec132a1d528181ec14e902e8e55d293a70190db13f940cbc83",
+      "image_digest": "sha256:82aa8469878c761db32e2623be3496196b18f67eb179c2570af8c79813438c89",
+      "workspace_tool_sha256": "f23b45b0eb481e4f36ef4688b663b3d478e4ac6e682e2c59f2735630217a570d",
+      "review_tool_sha256": "e4e8e3f6e08855dccedd593af7041d24384b889ced7c93fcc247bdfbfc2dd34c"
+    },
+    "binding_sha256": "95003948e46ae8e7f889557835c8d06e0baee5b0cf0ab527d5e0fa576cb5fabf",
+    "status": "PENDING",
+    "expires_at": 1794126653.104669,
+    "source_executed": false
+  },
+  "second_review": {
+    "id": "396e0f8a-1969-4e49-ad99-3decb49ee559",
+    "binding": {
+      "version": "sandbox-review-v3",
+      "scope": "sandbox_test_only",
+      "execution_permitted": true,
+      "task_id": "1ad77a7d-f8d4-45f4-9f7b-41f29720a153",
+      "actor": "development-service",
+      "tenant": "development",
+      "workspace_ref": "c248318a-fdb3-42e0-a70b-5bd54f98e273",
+      "base_sha256": "2453789946ad3b62630ad0d11d47280b7f0d281df0bc468b86f37936b2f9a794",
+      "candidate_ref": "039863f6-582a-4657-b9d1-1c2d6baf19bc",
+      "parent_candidate_ref": "96c4ab49-b253-4043-bc3c-4ff326cac954",
+      "patch_source_sha256": "746acbeefb970ee1c35b44e63e85316422a65c83c4c5415fe6c54eca63b37e27",
+      "candidate_sha256": "5ff0f31c55e56871aceacee3d93c89c272d743943fff24f0c401f2f1da9027ad",
+      "plan_ref": "c574868f-0e20-49fa-8e01-584e15b28071",
+      "plan_sha256": "22089911964453ec132a1d528181ec14e902e8e55d293a70190db13f940cbc83",
+      "image_digest": "sha256:82aa8469878c761db32e2623be3496196b18f67eb179c2570af8c79813438c89",
+      "workspace_tool_sha256": "f23b45b0eb481e4f36ef4688b663b3d478e4ac6e682e2c59f2735630217a570d",
+      "review_tool_sha256": "e4e8e3f6e08855dccedd593af7041d24384b889ced7c93fcc247bdfbfc2dd34c"
+    },
+    "binding_sha256": "fa8fcc2fe69d613e24a11fe892b0e279d8396a8869cd5c5269fe4ac05a34ac4a",
+    "status": "PENDING",
+    "expires_at": 1794126653.104669,
+    "source_executed": false
+  },
+  "executions": [
+    {
+      "image_digest": "sha256:82aa8469878c761db32e2623be3496196b18f67eb179c2570af8c79813438c89",
+      "result": {
+        "ok": true,
+        "data": {
+          "request_ref": "60fe761c-a65a-4c53-9791-dc0d2ce4fa1c",
+          "binding_sha256": "95003948e46ae8e7f889557835c8d06e0baee5b0cf0ab527d5e0fa576cb5fabf",
+          "image_digest": "sha256:82aa8469878c761db32e2623be3496196b18f67eb179c2570af8c79813438c89",
+          "baseline": {
+            "status": "FAILED",
+            "exit_code": 1,
+            "output": "test_sum (test_calc.Arithmetic.test_sum) ... FAIL\n\n======================================================================\nFAIL: test_sum (test_calc.Arithmetic.test_sum)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tests/test_calc.py\", line 6, in test_sum\n    self.assertEqual(total(2, 3), 5)\nAssertionError: -1 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+            "truncated": false,
+            "source_sha256": "2453789946ad3b62630ad0d11d47280b7f0d281df0bc468b86f37936b2f9a794",
+            "plan_sha256": "22089911964453ec132a1d528181ec14e902e8e55d293a70190db13f940cbc83"
+          },
+          "candidate": {
+            "status": "FAILED",
+            "exit_code": 1,
+            "output": "test_sum (test_calc.Arithmetic.test_sum) ... FAIL\n\n======================================================================\nFAIL: test_sum (test_calc.Arithmetic.test_sum)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tests/test_calc.py\", line 6, in test_sum\n    self.assertEqual(total(2, 3), 5)\nAssertionError: 6 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+            "truncated": false,
+            "source_sha256": "746acbeefb970ee1c35b44e63e85316422a65c83c4c5415fe6c54eca63b37e27",
+            "plan_sha256": "22089911964453ec132a1d528181ec14e902e8e55d293a70190db13f940cbc83"
+          },
+          "source_executed": true,
+          "production_approved": false
+        },
+        "error": null,
+        "isolation": {
+          "baseline": {
+            "CapEff": "0000000000000000",
+            "NoNewPrivs": "1",
+            "Seccomp": "2",
+            "runner_sha256": "e9dcb440ebd798e38cdb8ac46c5b57f53e4da90c241a334b9a48fb8b9a7c06e3",
+            "uid": 10001,
+            "root_readonly": true,
+            "docker_socket": false,
+            "interfaces": [
+              "lo"
+            ],
+            "memory_max": "134217728",
+            "pids_max": "32",
+            "cpu_max": "50000 100000"
+          },
+          "candidate": {
+            "CapEff": "0000000000000000",
+            "NoNewPrivs": "1",
+            "Seccomp": "2",
+            "runner_sha256": "e9dcb440ebd798e38cdb8ac46c5b57f53e4da90c241a334b9a48fb8b9a7c06e3",
+            "uid": 10001,
+            "root_readonly": true,
+            "docker_socket": false,
+            "interfaces": [
+              "lo"
+            ],
+            "memory_max": "134217728",
+            "pids_max": "32",
+            "cpu_max": "50000 100000"
+          }
+        },
+        "candidate_ref": null
+      }
+    },
+    {
+      "image_digest": "sha256:82aa8469878c761db32e2623be3496196b18f67eb179c2570af8c79813438c89",
+      "result": {
+        "ok": true,
+        "data": {
+          "request_ref": "396e0f8a-1969-4e49-ad99-3decb49ee559",
+          "binding_sha256": "fa8fcc2fe69d613e24a11fe892b0e279d8396a8869cd5c5269fe4ac05a34ac4a",
+          "image_digest": "sha256:82aa8469878c761db32e2623be3496196b18f67eb179c2570af8c79813438c89",
+          "baseline": {
+            "status": "FAILED",
+            "exit_code": 1,
+            "output": "test_sum (test_calc.Arithmetic.test_sum) ... FAIL\n\n======================================================================\nFAIL: test_sum (test_calc.Arithmetic.test_sum)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tests/test_calc.py\", line 6, in test_sum\n    self.assertEqual(total(2, 3), 5)\nAssertionError: -1 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+            "truncated": false,
+            "source_sha256": "2453789946ad3b62630ad0d11d47280b7f0d281df0bc468b86f37936b2f9a794",
+            "plan_sha256": "22089911964453ec132a1d528181ec14e902e8e55d293a70190db13f940cbc83"
+          },
+          "candidate": {
+            "status": "PASSED",
+            "exit_code": 0,
+            "output": "test_sum (test_calc.Arithmetic.test_sum) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+            "truncated": false,
+            "source_sha256": "5ff0f31c55e56871aceacee3d93c89c272d743943fff24f0c401f2f1da9027ad",
+            "plan_sha256": "22089911964453ec132a1d528181ec14e902e8e55d293a70190db13f940cbc83"
+          },
+          "source_executed": true,
+          "production_approved": false
+        },
+        "error": null,
+        "isolation": {
+          "baseline": {
+            "CapEff": "0000000000000000",
+            "NoNewPrivs": "1",
+            "Seccomp": "2",
+            "runner_sha256": "e9dcb440ebd798e38cdb8ac46c5b57f53e4da90c241a334b9a48fb8b9a7c06e3",
+            "uid": 10001,
+            "root_readonly": true,
+            "docker_socket": false,
+            "interfaces": [
+              "lo"
+            ],
+            "memory_max": "134217728",
+            "pids_max": "32",
+            "cpu_max": "50000 100000"
+          },
+          "candidate": {
+            "CapEff": "0000000000000000",
+            "NoNewPrivs": "1",
+            "Seccomp": "2",
+            "runner_sha256": "e9dcb440ebd798e38cdb8ac46c5b57f53e4da90c241a334b9a48fb8b9a7c06e3",
+            "uid": 10001,
+            "root_readonly": true,
+            "docker_socket": false,
+            "interfaces": [
+              "lo"
+            ],
+            "memory_max": "134217728",
+            "pids_max": "32",
+            "cpu_max": "50000 100000"
+          }
+        },
+        "candidate_ref": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "fixture_identities": true,
+  "fixture_model": true,
+  "task_id": "f23aa530-4af8-42da-8360-109535b8b67a",
+  "request_ref": "cd7bb320-404d-4bc2-a6b2-cf7fd7960316",
+  "binding": {
+    "version": "factory-execution-v1",
+    "scope": "factory_sandbox_test_only",
+    "task_id": "f23aa530-4af8-42da-8360-109535b8b67a",
+    "actor": "development-service",
+    "tenant": "development",
+    "bundle_ref": "d79ba98c-b997-4668-baf2-daad25f0f50f",
+    "bundle_sha256": "b94a016942e17bc093152aceb31d78a1ad89e3a6d2bb64cdaddf835fcc1d43c9",
+    "source_sha256": "4a65f46d542cf74b3abc7fcc2139a321450b3f8bac6362920900881e7f910ec0",
+    "report_ref": "b98d9c99-584a-4477-b821-6119f10d709e",
+    "report_sha256": "921eac38f27d9d1dd676ca3f690aa792d9cfd86190221aca30843bbc60644ed1",
+    "checker_sha256": "b4f3d37faafaf5858a3ffd3d84a622331f86112aa6ffe4028408901136557fbb",
+    "plan_ref": "1b00b80f-e591-4e6d-b123-77e3ed3513c3",
+    "plan_sha256": "1c04b2754bc13adf101c0cfd1b762bf733b30380769453d63796a8e594c18ba8",
+    "image_digest": "sha256:82aa8469878c761db32e2623be3496196b18f67eb179c2570af8c79813438c89",
+    "implementation_sha256": "89a242bd38621b3a7db77c328150503ce9143ee24950a2fa73d8c39330ecc772",
+    "limits": {
+      "max_steps": 6,
+      "max_tool_calls": 16,
+      "max_tokens": 64000,
+      "max_cost": 0,
+      "timeout_seconds": 300,
+      "call_timeout_seconds": 60,
+      "max_retries": 2
+    }
+  },
+  "result": {
+    "ok": true,
+    "data": {
+      "executor_role": "factory_runner_fixture_218ed18782134861b32ccff9d6ee8e00",
+      "request_ref": "cd7bb320-404d-4bc2-a6b2-cf7fd7960316",
+      "binding_sha256": "ba1eaeab7ddd609b81fc7bd5245d7a7be0dbcc0e79b38b06dca7f386dece771c",
+      "image_digest": "sha256:82aa8469878c761db32e2623be3496196b18f67eb179c2570af8c79813438c89",
+      "run": {
+        "status": "FAILED",
+        "exit_code": 1,
+        "output": "test_declared_fixtures (test_caliburn_contract.ContractFixtureTest.test_declared_fixtures) ... \n  test_declared_fixtures (test_caliburn_contract.ContractFixtureTest.test_declared_fixtures) (name='double_two') ... FAIL\ntest_fixture (test_double.TestDouble.test_fixture) ... ok\ntest_extra_case (test_independent.Independent.test_extra_case) ... FAIL\n\n======================================================================\nFAIL: test_declared_fixtures (test_caliburn_contract.ContractFixtureTest.test_declared_fixtures) (name='double_two')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tests/test_caliburn_contract.py\", line 28, in test_declared_fixtures\n    self.strict_equal(fn(**fixture['input']), fixture['expected'])\n  File \"/work/tests/test_caliburn_contract.py\", line 14, in strict_equal\n    for key in expected: self.strict_equal(actual[key], expected[key])\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tests/test_caliburn_contract.py\", line 18, in strict_equal\n    else: self.assertEqual(actual, expected)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 6 != 4\n\n======================================================================\nFAIL: test_extra_case (test_independent.Independent.test_extra_case)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tests/test_independent.py\", line 5, in test_extra_case\n    self.assertEqual(run(value=5), {'value':10})\nAssertionError: {'value': 15} != {'value': 10}\n- {'value': 15}\n?            ^\n\n+ {'value': 10}\n?            ^\n\n\n----------------------------------------------------------------------\nRan 3 tests in 0.001s\n\nFAILED (failures=2)\n",
+        "truncated": false,
+        "source_sha256": "4a65f46d542cf74b3abc7fcc2139a321450b3f8bac6362920900881e7f910ec0",
+        "plan_sha256": "1c04b2754bc13adf101c0cfd1b762bf733b30380769453d63796a8e594c18ba8"
+      },
+      "source_executed": true,
+      "production_approved": false,
+      "security": "INCOMPLETE",
+      "license": "UNREVIEWED"
+    },
+    "error": null,
+    "isolation": {
+      "CapEff": "0000000000000000",
+      "NoNewPrivs": "1",
+      "Seccomp": "2",
+      "runner_sha256": "e9dcb440ebd798e38cdb8ac46c5b57f53e4da90c241a334b9a48fb8b9a7c06e3",
+      "uid": 10001,
+      "root_readonly": true,
+      "docker_socket": false,
+      "interfaces": [
+        "lo"
+      ],
+      "memory_max": "134217728",
+      "pids_max": "32",
+      "cpu_max": "50000 100000"
+    }
+  }
+}

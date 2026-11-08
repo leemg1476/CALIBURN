@@ -1,0 +1,45 @@
+{
+  "inference": "scripted offline fixture (mock)",
+  "transport": "real HTTP / separate API, worker, trusted supervisor and task containers",
+  "database": "PostgreSQL",
+  "task_id": "c79ab31f-4761-4095-8cc4-c8af91d88805",
+  "state": "COMPLETED",
+  "model_calls": 5,
+  "tool_calls": 4,
+  "workspace_sha256": "1178933fa2f33fb036c395fb0fc585af2c2d80cdf470e490b1a8438845ac4e76",
+  "image_id": "sha256:f293e27677d6ebd5c7d2727eaa37467f34d03dcd45a8d4f5cf6bb87a759a0b01",
+  "operations": [
+    "repo_list",
+    "repo_search",
+    "repo_read",
+    "repo_patch"
+  ],
+  "isolation": {
+    "CapEff": "0000000000000000",
+    "NoNewPrivs": "1",
+    "Seccomp": "2",
+    "runner_sha256": "5c12835092a9d80e07869bd1144247395ceca4359a226b034901afc4915e8d1e",
+    "uid": 10001,
+    "root_readonly": true,
+    "docker_socket": false,
+    "interfaces": [
+      "lo"
+    ],
+    "memory_max": "134217728",
+    "pids_max": "32",
+    "cpu_max": "50000 100000"
+  },
+  "candidate": {
+    "path": "calc.py",
+    "base_sha256": "8fd25d0a91db93322fab8c481bd98527a9bf8b4ec43f5e06c4aa6ebebf669c8e",
+    "candidate_sha256": "9344fe33a09be455d18787e4d4b0a09b1965cb22758f1562704835a0a1410e16",
+    "candidate": "def total(a, b):\n    return a + b\n",
+    "diff": "--- a/calc.py\n+++ b/calc.py\n@@ -1,2 +1,2 @@\n def total(a, b):\n-    return a - b\n+    return a + b\n",
+    "executable": false,
+    "approved": false
+  },
+  "candidate_ref": "ecf117fb-63a7-4edf-8caf-c4586144b923",
+  "sse_sandbox_events": 4,
+  "source_executed": false,
+  "external_repository_changed": false
+}

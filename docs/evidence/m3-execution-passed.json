@@ -1,0 +1,69 @@
+{
+  "fixture_identities": true,
+  "fixture_model": true,
+  "task_id": "50ac21a9-ecb1-47f8-b300-3f72be6052d5",
+  "request_ref": "4133e711-8523-403f-b3ae-55e61a71e6bb",
+  "binding": {
+    "version": "factory-execution-v1",
+    "scope": "factory_sandbox_test_only",
+    "task_id": "50ac21a9-ecb1-47f8-b300-3f72be6052d5",
+    "actor": "development-service",
+    "tenant": "development",
+    "bundle_ref": "5584a0c5-65e6-42c8-be3b-8142a8fea6e9",
+    "bundle_sha256": "2802df7c46edcb6db4a51d6a6b3bc55d3e99b557ecff5bf43c5cfca0d2e51fc5",
+    "source_sha256": "86007fae27119248f3cf0c7d3f49c6e6048adc026ac549ef402481cd96afc494",
+    "report_ref": "5a6987d5-38ae-4974-a2f0-3a49af5b92f0",
+    "report_sha256": "960c6109184920e9c4ba0c47573ce123589a728a72a13893d9dfff32b8f3d133",
+    "checker_sha256": "b4f3d37faafaf5858a3ffd3d84a622331f86112aa6ffe4028408901136557fbb",
+    "plan_ref": "aaa3f4c1-8285-4849-a65a-6f89229ac314",
+    "plan_sha256": "1c04b2754bc13adf101c0cfd1b762bf733b30380769453d63796a8e594c18ba8",
+    "image_digest": "sha256:82aa8469878c761db32e2623be3496196b18f67eb179c2570af8c79813438c89",
+    "implementation_sha256": "89a242bd38621b3a7db77c328150503ce9143ee24950a2fa73d8c39330ecc772",
+    "limits": {
+      "max_steps": 6,
+      "max_tool_calls": 16,
+      "max_tokens": 64000,
+      "max_cost": 0,
+      "timeout_seconds": 300,
+      "call_timeout_seconds": 60,
+      "max_retries": 2
+    }
+  },
+  "result": {
+    "ok": true,
+    "data": {
+      "executor_role": "factory_runner_fixture_53b66e225a7d4c7d9471bb76aaca36d6",
+      "request_ref": "4133e711-8523-403f-b3ae-55e61a71e6bb",
+      "binding_sha256": "7d087e4aeef5f32aa7d3b9eeb8dbee77985d8ae6e49063471adbfaa8d9e0b64c",
+      "image_digest": "sha256:82aa8469878c761db32e2623be3496196b18f67eb179c2570af8c79813438c89",
+      "run": {
+        "status": "PASSED",
+        "exit_code": 0,
+        "output": "test_declared_fixtures (test_caliburn_contract.ContractFixtureTest.test_declared_fixtures) ... ok\ntest_fixture (test_double.TestDouble.test_fixture) ... ok\ntest_extra_case (test_independent.Independent.test_extra_case) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.001s\n\nOK\n",
+        "truncated": false,
+        "source_sha256": "86007fae27119248f3cf0c7d3f49c6e6048adc026ac549ef402481cd96afc494",
+        "plan_sha256": "1c04b2754bc13adf101c0cfd1b762bf733b30380769453d63796a8e594c18ba8"
+      },
+      "source_executed": true,
+      "production_approved": false,
+      "security": "INCOMPLETE",
+      "license": "UNREVIEWED"
+    },
+    "error": null,
+    "isolation": {
+      "CapEff": "0000000000000000",
+      "NoNewPrivs": "1",
+      "Seccomp": "2",
+      "runner_sha256": "e9dcb440ebd798e38cdb8ac46c5b57f53e4da90c241a334b9a48fb8b9a7c06e3",
+      "uid": 10001,
+      "root_readonly": true,
+      "docker_socket": false,
+      "interfaces": [
+        "lo"
+      ],
+      "memory_max": "134217728",
+      "pids_max": "32",
+      "cpu_max": "50000 100000"
+    }
+  }
+}

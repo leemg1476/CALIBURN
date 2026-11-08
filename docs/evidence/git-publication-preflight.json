@@ -1,0 +1,11 @@
+{
+  "scope": "exact staged initial commit blobs; metadata report updated after scan",
+  "files": 196,
+  "bytes_at_scan": 2088472,
+  "known_key_hits": 0,
+  "credential_marker_files": [],
+  "ignored_api_file": true,
+  "ignored_budget_file": true,
+  "public_push_performed": false,
+  "complete_secret_certification": false
+}

@@ -1,0 +1,205 @@
+{
+  "inference": "fixture (mock)",
+  "database": "PostgreSQL",
+  "transport": "actual browser/HTTP/SSE and separate API/worker",
+  "task_id": "cb0f64da-a0c8-43e0-813b-75e0eec3114c",
+  "state": "COMPLETED",
+  "result": "\uac80\uc99d\ub41c \ub3c4\uad6c \uacb0\uacfc: {\"sum\": 42.0}",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "history": {
+    "limits": {
+      "max_steps": 6,
+      "max_tool_calls": 16,
+      "max_tokens": 64000,
+      "max_cost": 0,
+      "timeout_seconds": 300.0,
+      "call_timeout_seconds": 60,
+      "max_retries": 2
+    },
+    "deadline": 1794129709.660557,
+    "steps": [
+      {
+        "id": "c2b1dbbd-25ab-4a03-9487-c26206432035",
+        "ordinal": 1,
+        "run_id": "e54aebb4-3bad-4069-97c7-dcc396276b0b",
+        "kind": "MODEL",
+        "status": "COMPLETED",
+        "attempts": 1,
+        "tool_name": null,
+        "input_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "output_sha256": "18723195c26e409a5474a687ab37a9176b601c7b063548f8a091016a56c72e5f"
+      },
+      {
+        "id": "ea96d2a8-786c-4c33-a073-bc983da8d5ed",
+        "ordinal": 2,
+        "run_id": "e54aebb4-3bad-4069-97c7-dcc396276b0b",
+        "kind": "TOOL",
+        "status": "COMPLETED",
+        "attempts": 1,
+        "tool_name": "add_numbers",
+        "input_sha256": "d945ddf97c73dcdc97280b62c5027d9336c4fe1f14d085fd73a0ad623d3e52b4",
+        "output_sha256": "63d1f39b1ef67b9a5f7f1bd3f2fec42e8e6e5c86b43d94ac7af46924a827b124"
+      },
+      {
+        "id": "bf61c943-5974-43e1-b2b3-5fdda3550403",
+        "ordinal": 3,
+        "run_id": "e54aebb4-3bad-4069-97c7-dcc396276b0b",
+        "kind": "MODEL",
+        "status": "COMPLETED",
+        "attempts": 1,
+        "tool_name": null,
+        "input_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "output_sha256": "5c2691dbeba1c9285cbcfedf60b292bc207b542865f6ce079884e9dc0e5afad7"
+      }
+    ],
+    "runs": [
+      {
+        "id": "e54aebb4-3bad-4069-97c7-dcc396276b0b",
+        "worker": "DESKTOP-B6QH6IK-4984-57488788",
+        "started_at": 1794129409.660557,
+        "ended_at": 1794129409.787842,
+        "outcome": "COMPLETED"
+      }
+    ],
+    "next_step": null,
+    "next_run_offset": null
+  },
+  "events": [
+    {
+      "task_id": "cb0f64da-a0c8-43e0-813b-75e0eec3114c",
+      "sequence": 1,
+      "timestamp": 1794129326.434354,
+      "actor": "development-service",
+      "type": "TASK_CREATED",
+      "run_id": null,
+      "payload": {
+        "input_sha256": "66a697d9e74075f97527c1408cf62315d45c8d1fec744d6512155dc10d972fdb",
+        "policy": "m1-static-v1"
+      }
+    },
+    {
+      "task_id": "cb0f64da-a0c8-43e0-813b-75e0eec3114c",
+      "sequence": 2,
+      "timestamp": 1794129371.622279,
+      "actor": "development-service",
+      "type": "TASK_PAUSED",
+      "run_id": null,
+      "payload": {}
+    },
+    {
+      "task_id": "cb0f64da-a0c8-43e0-813b-75e0eec3114c",
+      "sequence": 3,
+      "timestamp": 1794129392.87059,
+      "actor": "development-service",
+      "type": "TASK_RESUMED",
+      "run_id": null,
+      "payload": {}
+    },
+    {
+      "task_id": "cb0f64da-a0c8-43e0-813b-75e0eec3114c",
+      "sequence": 4,
+      "timestamp": 1794129409.669994,
+      "actor": "development-service",
+      "type": "RUN_STARTED",
+      "run_id": "e54aebb4-3bad-4069-97c7-dcc396276b0b",
+      "payload": {}
+    },
+    {
+      "task_id": "cb0f64da-a0c8-43e0-813b-75e0eec3114c",
+      "sequence": 5,
+      "timestamp": 1794129409.700428,
+      "actor": "development-service",
+      "type": "STEP_STARTED",
+      "run_id": "e54aebb4-3bad-4069-97c7-dcc396276b0b",
+      "payload": {
+        "step_id": "c2b1dbbd-25ab-4a03-9487-c26206432035",
+        "kind": "MODEL",
+        "attempt": 1,
+        "policy": "m1-static-v1",
+        "tool_digest": null,
+        "tool_name": null
+      }
+    },
+    {
+      "task_id": "cb0f64da-a0c8-43e0-813b-75e0eec3114c",
+      "sequence": 6,
+      "timestamp": 1794129409.717648,
+      "actor": "development-service",
+      "type": "STEP_COMPLETED",
+      "run_id": "e54aebb4-3bad-4069-97c7-dcc396276b0b",
+      "payload": {
+        "step_id": "c2b1dbbd-25ab-4a03-9487-c26206432035",
+        "kind": "MODEL",
+        "output_sha256": "18723195c26e409a5474a687ab37a9176b601c7b063548f8a091016a56c72e5f"
+      }
+    },
+    {
+      "task_id": "cb0f64da-a0c8-43e0-813b-75e0eec3114c",
+      "sequence": 7,
+      "timestamp": 1794129409.737497,
+      "actor": "development-service",
+      "type": "STEP_STARTED",
+      "run_id": "e54aebb4-3bad-4069-97c7-dcc396276b0b",
+      "payload": {
+        "step_id": "ea96d2a8-786c-4c33-a073-bc983da8d5ed",
+        "kind": "TOOL",
+        "attempt": 1,
+        "policy": "m1-static-v1",
+        "tool_digest": "7164d6c50f13434d3b68ead7e8d91641c2cc46ffd6ccc8274437be3634168961",
+        "tool_name": "add_numbers"
+      }
+    },
+    {
+      "task_id": "cb0f64da-a0c8-43e0-813b-75e0eec3114c",
+      "sequence": 8,
+      "timestamp": 1794129409.751722,
+      "actor": "development-service",
+      "type": "STEP_COMPLETED",
+      "run_id": "e54aebb4-3bad-4069-97c7-dcc396276b0b",
+      "payload": {
+        "step_id": "ea96d2a8-786c-4c33-a073-bc983da8d5ed",
+        "kind": "TOOL",
+        "output_sha256": "63d1f39b1ef67b9a5f7f1bd3f2fec42e8e6e5c86b43d94ac7af46924a827b124"
+      }
+    },
+    {
+      "task_id": "cb0f64da-a0c8-43e0-813b-75e0eec3114c",
+      "sequence": 9,
+      "timestamp": 1794129409.770561,
+      "actor": "development-service",
+      "type": "STEP_STARTED",
+      "run_id": "e54aebb4-3bad-4069-97c7-dcc396276b0b",
+      "payload": {
+        "step_id": "bf61c943-5974-43e1-b2b3-5fdda3550403",
+        "kind": "MODEL",
+        "attempt": 1,
+        "policy": "m1-static-v1",
+        "tool_digest": null,
+        "tool_name": null
+      }
+    },
+    {
+      "task_id": "cb0f64da-a0c8-43e0-813b-75e0eec3114c",
+      "sequence": 10,
+      "timestamp": 1794129409.784884,
+      "actor": "development-service",
+      "type": "STEP_COMPLETED",
+      "run_id": "e54aebb4-3bad-4069-97c7-dcc396276b0b",
+      "payload": {
+        "step_id": "bf61c943-5974-43e1-b2b3-5fdda3550403",
+        "kind": "MODEL",
+        "output_sha256": "5c2691dbeba1c9285cbcfedf60b292bc207b542865f6ce079884e9dc0e5afad7"
+      }
+    },
+    {
+      "task_id": "cb0f64da-a0c8-43e0-813b-75e0eec3114c",
+      "sequence": 11,
+      "timestamp": 1794129409.789493,
+      "actor": "development-service",
+      "type": "TASK_COMPLETED",
+      "run_id": "e54aebb4-3bad-4069-97c7-dcc396276b0b",
+      "payload": {}
+    }
+  ]
+}

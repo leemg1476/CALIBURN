@@ -1,0 +1,93 @@
+{
+  "fixtures": [
+    "model inference",
+    "reviewer identity",
+    "source and independent test plan"
+  ],
+  "actual": [
+    "PostgreSQL",
+    "worker",
+    "independent role approval",
+    "fresh Docker container per variant"
+  ],
+  "task_state": "COMPLETED",
+  "model_calls": 4,
+  "tool_calls": 3,
+  "binding": {
+    "version": "sandbox-review-v2",
+    "scope": "sandbox_test_only",
+    "execution_permitted": true,
+    "task_id": "a59fd4e5-ce45-4e5f-aa72-10906c89d7bc",
+    "actor": "development-service",
+    "tenant": "development",
+    "workspace_ref": "b12ce3a5-ac5b-4367-a40e-87fffa4ea7b3",
+    "base_sha256": "2453789946ad3b62630ad0d11d47280b7f0d281df0bc468b86f37936b2f9a794",
+    "candidate_ref": "3141c28b-7b44-4231-b3fb-0d89487417df",
+    "candidate_sha256": "5ff0f31c55e56871aceacee3d93c89c272d743943fff24f0c401f2f1da9027ad",
+    "plan_ref": "973e4e0c-bab3-4ecc-9e3d-3ce20a820d7f",
+    "plan_sha256": "22089911964453ec132a1d528181ec14e902e8e55d293a70190db13f940cbc83",
+    "image_digest": "sha256:3d891106e0b144981d8aef22177db91105adedcf874d769430ae4a78fd86e6fa",
+    "workspace_tool_sha256": "709ae290bd467736440956573c47aeda371986b2d36d06b984b26b298ca170e1",
+    "review_tool_sha256": "2d237e793dc85dc1d092f1b7e3c78c772824ec639d5662842d2e7398f65352a4"
+  },
+  "result": {
+    "ok": true,
+    "data": {
+      "request_ref": "718e467a-301c-45eb-a147-81e77b584f92",
+      "binding_sha256": "63918c1285f0600dbff572e3ff3dc886db6158613097477683b2da72b8ed5595",
+      "image_digest": "sha256:3d891106e0b144981d8aef22177db91105adedcf874d769430ae4a78fd86e6fa",
+      "baseline": {
+        "status": "FAILED",
+        "exit_code": 1,
+        "output": "test_sum (test_calc.Arithmetic.test_sum) ... FAIL\n\n======================================================================\nFAIL: test_sum (test_calc.Arithmetic.test_sum)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tests/test_calc.py\", line 6, in test_sum\n    self.assertEqual(total(2, 3), 5)\nAssertionError: -1 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "truncated": false,
+        "source_sha256": "2453789946ad3b62630ad0d11d47280b7f0d281df0bc468b86f37936b2f9a794",
+        "plan_sha256": "22089911964453ec132a1d528181ec14e902e8e55d293a70190db13f940cbc83"
+      },
+      "candidate": {
+        "status": "PASSED",
+        "exit_code": 0,
+        "output": "test_sum (test_calc.Arithmetic.test_sum) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "truncated": false,
+        "source_sha256": "5ff0f31c55e56871aceacee3d93c89c272d743943fff24f0c401f2f1da9027ad",
+        "plan_sha256": "22089911964453ec132a1d528181ec14e902e8e55d293a70190db13f940cbc83"
+      },
+      "source_executed": true,
+      "production_approved": false
+    },
+    "error": null,
+    "isolation": {
+      "baseline": {
+        "CapEff": "0000000000000000",
+        "NoNewPrivs": "1",
+        "Seccomp": "2",
+        "runner_sha256": "02472eea5a204bffd721c250bea809ef71d26b7fef0fc177fa5f05c3960e4b53",
+        "uid": 10001,
+        "root_readonly": true,
+        "docker_socket": false,
+        "interfaces": [
+          "lo"
+        ],
+        "memory_max": "134217728",
+        "pids_max": "32",
+        "cpu_max": "50000 100000"
+      },
+      "candidate": {
+        "CapEff": "0000000000000000",
+        "NoNewPrivs": "1",
+        "Seccomp": "2",
+        "runner_sha256": "02472eea5a204bffd721c250bea809ef71d26b7fef0fc177fa5f05c3960e4b53",
+        "uid": 10001,
+        "root_readonly": true,
+        "docker_socket": false,
+        "interfaces": [
+          "lo"
+        ],
+        "memory_max": "134217728",
+        "pids_max": "32",
+        "cpu_max": "50000 100000"
+      }
+    },
+    "candidate_ref": null
+  }
+}

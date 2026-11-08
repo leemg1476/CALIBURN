@@ -1,0 +1,32 @@
+{
+  "inference": "scripted offline fixture (mock)",
+  "transport": "real HTTP / separate API, worker, trusted supervisor and task containers",
+  "task_id": "c79ab31f-4761-4095-8cc4-c8af91d88805",
+  "state": "COMPLETED",
+  "checkout": {
+    "directory": "C:\\Users\\LeeMyeonggyu\\Documents\\project\\caliburn\\.caliburn\\checkouts\\caliburn-task-lu7iw3a2",
+    "manifest": {
+      "version": "task-git-checkout-v1",
+      "mode": "scoped_snapshot_reconstruction",
+      "task_ref": "c79ab31f-4761-4095-8cc4-c8af91d88805",
+      "workspace_ref": "31bbd1f4-0acf-4eea-a7c2-75f973107c0a",
+      "candidate_ref": "ecf117fb-63a7-4edf-8caf-c4586144b923",
+      "actor": "development-service",
+      "tenant": "development",
+      "original_commit": null,
+      "baseline_sha256": "1178933fa2f33fb036c395fb0fc585af2c2d80cdf470e490b1a8438845ac4e76",
+      "candidate_sha256": "ea73bc6cf499e10507f0300fbb2f64abd800dcd89e34eafe21b009fab80f4e04",
+      "baseline_git_commit": "98b589844067d2bdeafe68e3217d2923891068a3",
+      "baseline_tree": "90e73af953c48c7d368c39358b5c65e778ff7894",
+      "candidate_tree": "2901c0f08056706a643ff963f3b72374280953af",
+      "diff_sha256": "daeb13186f1751c9e895bc2082a9edc639e0a4c2c91e8f68630d3d2d13e34982",
+      "git_version": "git version 2.31.0.windows.1",
+      "source_executed": false,
+      "production_approved": false
+    }
+  },
+  "git_diff": "diff --git a/calc.py b/calc.py\nindex c6942f9..7673d67 100644\n--- a/calc.py\n+++ b/calc.py\n@@ -1,2 +1,2 @@\n def total(a, b):\n-    return a - b\n+    return a + b\n",
+  "source_executed": false,
+  "remote_write": false,
+  "scope": "operator handoff only; reconstructed granted snapshot, no original history clone"
+}

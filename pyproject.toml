@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "caliburn-platform"
+version = "0.1.0"
+description = "CALIBURN enterprise autonomous agent platform bootstrap"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.115,<1",
+  "uvicorn[standard]>=0.34,<1",
+  "pydantic>=2.10,<3",
+  "httpx>=0.28,<1",
+  "sqlalchemy>=2.0,<3",
+  "alembic>=1.14,<2",
+  "psycopg[binary]>=3.2,<4",
+  "cryptography==50.0.2",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "pytest-asyncio>=0.25,<2", "ruff>=0.9,<1"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"caliburn.web" = ["assets/*.html", "assets/*.css", "assets/*.mjs"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.ruff]
+extend-exclude = [".caliburn", "build", "dist", "*.egg-info"]
+line-length = 100
+target-version = "py312"

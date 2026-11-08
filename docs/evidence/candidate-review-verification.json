@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-08",
+  "scope": "M2.3a independent candidate review workflow",
+  "implemented": ["immutable candidate persistence", "exact artifact review binding", "PostgreSQL current_user reviewer authority", "WAITING_APPROVAL", "approve/reject/revoke/expiry", "reviewer inspect/decision CLI", "new-worker resume"],
+  "real_components": ["PostgreSQL 17", "migration and role ACL/trigger enforcement", "durable worker checkpoints", "Docker fixed data runner", "review CLI subprocesses"],
+  "fixtures": ["model inference", "independent reviewer identity via random NOLOGIN test role", "source and test-plan files"],
+  "full_suite": {"passed": 118, "skipped": 11, "failed": 0, "warnings": 1, "seconds": 77.53},
+  "skip_scope": "PostgreSQL-specific SQLite instances and one PostgreSQL instance of the SQLite-only denial check; actual PostgreSQL and Docker review flow passed",
+  "static_checks": {"ruff": "passed", "format": "75 files formatted", "compileall": "passed"},
+  "source_executed": false,
+  "production_reviewer_provisioned": false,
+  "remaining": ["qualified candidate test execution", "test-driven repair", "task-local checkout", "OIDC reviewer identity", "signed promotion/registry", "tenant-isolated approval service"],
+  "cleanup_observed": {"managed_v2_sandboxes": 0, "temporary_review_roles": 0},
+  "evidence_owner": "tests/test_review.py and tests/test_sandbox.py"
+}

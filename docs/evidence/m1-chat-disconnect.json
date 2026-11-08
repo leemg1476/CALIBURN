@@ -1,0 +1,20 @@
+{
+  "transport": "real HTTP sockets",
+  "inference": "offline fixture (mock)",
+  "task_id": "a532acfe-4ab8-4f79-b370-dc377d0440c6",
+  "disconnected_after_first_chat_frame": true,
+  "state_after_disconnect": "QUEUED",
+  "final_state": "COMPLETED",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "replay_ids": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "live_model": true,
+  "model": "gpt-6-luna",
+  "api": "chat_completions",
+  "reasoning_effort": "none",
+  "task_id": "4b85498e-7170-427b-8c31-a1af16912e34",
+  "state": "COMPLETED",
+  "error": null,
+  "result": "47",
+  "model_calls": 3,
+  "tool_calls": 2,
+  "observed_tool_sums": [
+    42.0,
+    47.0
+  ],
+  "budget": {
+    "max_calls": 100,
+    "max_tokens": 50000,
+    "attempts": 3,
+    "charged_tokens": 745,
+    "actual_tokens": 745,
+    "usage": [
+      {
+        "prompt_tokens": 193,
+        "completion_tokens": 21,
+        "total_tokens": 214
+      },
+      {
+        "prompt_tokens": 233,
+        "completion_tokens": 21,
+        "total_tokens": 254
+      },
+      {
+        "prompt_tokens": 273,
+        "completion_tokens": 4,
+        "total_tokens": 277
+      }
+    ]
+  },
+  "commercial_fallback": false
+}

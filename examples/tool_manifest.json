@@ -1,0 +1,23 @@
+{
+  "name": "repo.search_symbols",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "artifact_sha256": null,
+  "description": "Search a repository for symbol definitions within a scoped workspace",
+  "input_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {"symbol": {"type": "string", "minLength": 1, "maxLength": 128}},
+    "required": ["symbol"]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {"matches": {"type": "array", "items": {"type": "object"}}},
+    "required": ["matches"]
+  },
+  "permissions": {"filesystem": "repo-read-only", "network": "deny", "secret_scopes": []},
+  "resources": {"wall_time_seconds": 10, "memory_mb": 256, "cpu_cores": 0.5},
+  "tests": ["unit", "contract", "resource_limits", "poisoned_readme"],
+  "publisher": null,
+  "approval_receipt": null
+}

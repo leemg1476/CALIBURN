@@ -1,0 +1,1 @@
+{"deployment": "Docker Compose", "final_source": true, "state": "COMPLETED", "runtime_db_role": "caliburn", "superuser": false, "schema_create_denied": true, "model_calls": 2, "tool_calls": 1, "app_sha256": "8975e123513c1dabfd0527d43c345a8ededcd4d68d652f0dfd2400f02e013c50"}

@@ -1,0 +1,25 @@
+# Policy specimen only; runtime YAML policy loader is NOT implemented in M0.
+policies:
+  local_only:
+    allow_external_model: false
+    primary_provider: onprem
+    fallback: []
+    max_cost_usd: 0
+    classification: [internal, confidential, regulated]
+  hybrid_consented:
+    allow_external_model: true
+    primary_provider: onprem
+    fallback: [vendor_approved]
+    classification: [public, internal]
+    require_tenant_consent: true
+    max_cost_usd: 20
+providers:
+  onprem:
+    api_style: openai_compatible
+    base_url_env: CALIBURN_LOCAL_BASE_URL
+    model_env: CALIBURN_LOCAL_MODEL
+  vendor_approved:
+    api_style: openai_compatible
+    base_url_env: CALIBURN_COMMERCIAL_BASE_URL
+    model_env: CALIBURN_COMMERCIAL_MODEL
+    secret_ref: vault://tenants/{tenant_id}/llm/commercial

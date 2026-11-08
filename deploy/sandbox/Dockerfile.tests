@@ -1,0 +1,8 @@
+FROM python:3.12-slim
+RUN useradd --uid 10001 --no-create-home --shell /usr/sbin/nologin runner
+COPY src/caliburn/sandbox/runner.py /opt/runner.py
+COPY src/caliburn/sandbox/test_runner.py /opt/test_runner.py
+COPY src/caliburn/sandbox/test_check.py /opt/check.py
+USER 10001:10001
+WORKDIR /work
+ENTRYPOINT ["python", "-I", "-B", "/opt/test_runner.py"]
