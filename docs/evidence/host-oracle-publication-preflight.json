@@ -1,0 +1,9 @@
+{
+  "scope": "all exact staged blobs before milestone commit; report added after scan",
+  "files": 208,
+  "bytes_at_scan": 2254026,
+  "known_key_hits": 0,
+  "credential_marker_hits": 0,
+  "complete_secret_certification": false,
+  "public_push_performed": false
+}

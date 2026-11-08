@@ -16,8 +16,10 @@ from caliburn.tool_factory.contracts import (
     CapabilityBundle,
     StaticReport,
     digest,
+    matches,
 )
 from caliburn.tool_factory.execution_contracts import EXEC_DIGEST, ExecutionAdmission
+from caliburn.tool_factory.oracle import PLAN_FILE, OraclePlan, plan_digest, read_plan
 from caliburn.tool_factory.schema import (
     bundles,
     check_jobs,
@@ -216,7 +218,14 @@ class Qualification:
         return bundle, report
 
     def register_plan(
-        self, bundle_id, report_id, independent: Bundle, image_digest, ttl_seconds=3600
+        self,
+        bundle_id,
+        report_id,
+        independent: Bundle,
+        image_digest,
+        ttl_seconds=3600,
+        *,
+        oracle_cases=None,
     ):
         if (
             not re.fullmatch(r"sha256:[a-f0-9]{64}", image_digest)
@@ -228,6 +237,21 @@ class Qualification:
             VerifierAuthority(self.store)._owner(c)
             bundle, _ = self._artifacts(c, bundle_id, report_id)
             plan = contract_plan(bundle["payload"], independent)
+            if PLAN_FILE in plan.files:
+                raise FactoryDenied()
+            oracle = OraclePlan(
+                case_source="operator" if oracle_cases is not None else "bundle_declared",
+                entrypoint=bundle["payload"]["manifest"]["entrypoint"],
+                cases=oracle_cases if oracle_cases is not None else bundle["payload"]["fixtures"],
+            )
+            manifest = bundle["payload"]["manifest"]
+            if any(
+                not matches(manifest["input_schema"], case.input)
+                or not matches(manifest["output_schema"], case.expected)
+                for case in oracle.cases
+            ):
+                raise FactoryDenied()
+            plan = Bundle(files=plan.files | {PLAN_FILE: oracle.model_dump_json()})
             pid = str(uuid4())
             now = self.store.now(c)
             c.execute(
@@ -274,8 +298,13 @@ class Qualification:
         source = Bundle(files=bundle["payload"]["sources"])
         if files.digest() != plan["sha256"]:
             raise FactoryDenied()
+        oracle = read_plan(files.files)
+        if oracle.entrypoint != bundle["payload"]["manifest"]["entrypoint"]:
+            raise FactoryDenied()
         binding = {
-            "version": "factory-execution-v1",
+            "version": "factory-execution-v2",
+            "oracle_sha256": plan_digest(oracle),
+            "oracle_cases": len(oracle.cases),
             "scope": "factory_sandbox_test_only",
             "task_id": task["id"],
             "actor": task["actor"],
@@ -288,6 +317,9 @@ class Qualification:
             "checker_sha256": CHECKER_DIGEST,
             "plan_ref": plan_id,
             "plan_sha256": plan["sha256"],
+            "child_plan_sha256": Bundle(
+                files={k: v for k, v in files.files.items() if k != PLAN_FILE}
+            ).digest(),
             "image_digest": plan["image_digest"],
             "implementation_sha256": EXEC_DIGEST,
             "limits": task["limits"],

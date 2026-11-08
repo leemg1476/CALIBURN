@@ -69,3 +69,8 @@ Default-off capability_request_execution/capability_execute_tests now consume op
 ## Independently signed evidence subset (0008)
 
 Real Ed25519 signatures now bind complete immutable candidate/static/independent-review/execution/test-plan evidence. Distinct signer role/process and public-key trust mappings, export/import/offline verification, live revocation and API/unrelated-task lookup consumers are implemented. This supersedes the earlier unbuilt-signing statement for evidence integrity only. EVIDENCE_ONLY artifacts remain QUARANTINED/noninvokable/nonactivatable; full qualification, production signing custody/release approval and active registry remain open. See SIGNED_EVIDENCE.md/ADR0013.
+
+
+## Host-owned finite-vector comparison
+
+Approved unittest child exit0 no longer suffices for a new Factory PASSED receipt/signature. Host-controlled typed vector comparisons run against fresh isolated source/entrypoint/input containers, with expectations outside the subject and complete hash/count/source/subset-plan proof. Actual child reporting attacks are rejected by real PG/Docker tests. Defaults remain candidate-declared; operator vectors have separate provenance. This is an implemented anti-report-tamper subset, not complete property/SAST/poison/dependency/license qualification or executable registry admission. See HOST_ORACLE.md/ADR0014.

@@ -39,7 +39,7 @@ from caliburn.tool_factory.verifier import StaticVerifier
 IMAGE = os.getenv("CALIBURN_REVIEWED_TEST_IMAGE")
 
 
-async def plan(store, verifier_store, *, value=None, image=None):
+async def plan(store, verifier_store, *, value=None, image=None, oracle_cases=None):
     cid = candidate(store, value)
     tid, _, _, _ = pending(store, cid)
     assert await StaticVerifier(verifier_store).run_once()
@@ -56,7 +56,7 @@ async def plan(store, verifier_store, *, value=None, image=None):
         }
     )
     return Qualification(store).register_plan(
-        cid, report, independent, image or IMAGE or "sha256:" + "0" * 64
+        cid, report, independent, image or IMAGE or "sha256:" + "0" * 64, oracle_cases=oracle_cases
     )
 
 

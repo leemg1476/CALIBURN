@@ -43,3 +43,8 @@ Prefer compatible code rollback retaining immutable evidence. Stop signers/new r
 ## Evidence and limits
 
 tests/test_signed_evidence.py covers pure cryptographic corruption/algorithm/scope/time/purpose tests (explicit synthetic data), then actual PostgreSQL roles plus Docker execution, a separate signer OS process opening an encrypted ephemeral key, export/import replay, public HTTP/unrelated-task lookup, independent offline verification, live key/role/review revocation, self-sign denial, immutable rows and TEMP mapping denial. See docs/evidence/m3-signing-git-focused.xml and DEV_PROGRESS.md for final counts/commands. These tests do not establish complete malicious-subject anti-tamper, supply-chain/security/license qualification, MCP/Skill/dependency execution, production release approval, active version rollout or measured executable reuse. Those remain next milestones.
+
+
+## Execution bindingv2 oracle requirement
+
+New signatures and imports now require complete PASSED host-oracle proof, exact vector hash/count and successful actual child source/subset-plan evidence. v2 signed statements recompute the child-only subset hash from the full immutable plan. Actual child exit/output are preserved separately; aggregate run names the full reviewed host+child plan. Child exit0 under reporting tamper cannot alone become signed success. Historicalv1 evidence stays nonactivating, not silently upgraded or newly imported without complete proof. See HOST_ORACLE.md/ADR0014; no schema migration or production activation added.

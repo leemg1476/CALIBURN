@@ -48,6 +48,8 @@ M1 is a working backend slice, not a claim of safe autonomous repository coding.
 - [ ] M3.2b: Independently approved isolated behavior/property/replay/resource tests and comprehensive security/dependency/license qualification for Factory bundles.
 - [x] M3.2b.1: Separate Factory execution-only reviewer/executor roles, hash-bound plans/waits, actual stdlib Python container tests, timeout/output/stop and checkpoint recovery evidence. See FACTORY_EXECUTION.md/ADR0012.
 - [ ] M3.2b.2: Full property/negative/replay/poison/SAST/dependency/license qualification and MCP/Skill/nonstdlib adapters; malicious subject/test anti-tamper validation.
+- [x] M3.2b.2a: Host-owned finite-vector JSON comparison in fresh per-input containers after approved unittest execution; real reporting-tamper/early-exit/withholding/revocation/timeout and missing-proof denials. Bindingv2, no SQL migration. See HOST_ORACLE.md/ADR0014.
+- [ ] M3.2b.2b: Broader adversarial/property/replay/poison/dependency/license qualification and measured coverage; finite vectors alone do not release a candidate.
 
 - [x] M3.3a: Independently signed immutable EVIDENCE_ONLY bundles, real public-key verification, live key/review revocation and scoped API/unrelated-task lookup consumers; no activation. See SIGNED_EVIDENCE.md/ADR0013.
 - [ ] M3.3b: Independent complete-qualification release approval, production signing custody, registry activation/tenant allowlists/staged rollback.

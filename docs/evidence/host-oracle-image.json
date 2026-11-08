@@ -1,0 +1,10 @@
+{
+  "image": "sha256:804d513ddffadcaaee7633006cfe91339eb839667dd86e59e4a52c6c97ec15cb",
+  "actual": {
+    "uid": 10001,
+    "invoke_runner_sha256": "81d89cc532e07eeccc81cae101517737bdd2b3c28e8b769a941f636fe1e90d6f"
+  },
+  "source_byte_match": true,
+  "new_dependencies": [],
+  "customer_clearance": false
+}

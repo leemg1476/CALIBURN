@@ -3,6 +3,7 @@ RUN useradd --uid 10001 --no-create-home --shell /usr/sbin/nologin runner
 COPY src/caliburn/sandbox/runner.py /opt/runner.py
 COPY src/caliburn/sandbox/test_runner.py /opt/test_runner.py
 COPY src/caliburn/sandbox/test_check.py /opt/check.py
+COPY src/caliburn/sandbox/invoke_runner.py /opt/invoke_runner.py
 USER 10001:10001
 WORKDIR /work
 ENTRYPOINT ["python", "-I", "-B", "/opt/test_runner.py"]

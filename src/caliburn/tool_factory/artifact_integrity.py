@@ -10,6 +10,7 @@ from pydantic import Field, JsonValue, model_validator
 from caliburn.sandbox.contracts import Bundle
 from caliburn.tool_factory.contracts import CapabilityBundle, Contract, StaticReport, digest
 from caliburn.tool_factory.execution_contracts import SHA, UUID, ExecutionResult
+from caliburn.tool_factory.oracle import PLAN_FILE, require_proof
 
 MAX_ENVELOPE_BYTES = 2_097_152
 DOMAIN = b"CALIBURN\x00EVIDENCE_ONLY\x00ED25519\x00V1\x00"
@@ -53,6 +54,15 @@ class EvidenceStatement(Contract):
         result = self.execution_result.model_dump()
         run = self.execution_result.data
         binding = self.execution_binding
+        if (
+            binding.get("version") == "factory-execution-v2"
+            and require_proof(binding, self.execution_result.isolation).status != "PASSED"
+        ):
+            raise ValueError("Independent oracle did not pass")
+        if binding.get("version") == "factory-execution-v2" and Bundle(
+            files={k: v for k, v in self.plan_files.items() if k != PLAN_FILE}
+        ).digest() != binding.get("child_plan_sha256"):
+            raise ValueError("Child plan mismatch")
         if (
             digest(bundle) != self.bundle_sha256
             or digest(report) != self.static_report_sha256

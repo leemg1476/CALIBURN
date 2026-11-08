@@ -23,6 +23,7 @@ from caliburn.tool_factory.artifact_integrity import (
 from caliburn.tool_factory.checks import VerifierAuthority, mutable_runtime, role
 from caliburn.tool_factory.contracts import digest
 from caliburn.tool_factory.execution_contracts import ExecutionResult
+from caliburn.tool_factory.oracle import require_proof
 from caliburn.tool_factory.schema import (
     bundles,
     check_reports,
@@ -39,7 +40,9 @@ from caliburn.tool_factory.schema import (
 )
 
 POLICY_DIGEST = hashlib.sha256(
-    Path(__file__).read_bytes() + Path(__file__).with_name("artifact_integrity.py").read_bytes()
+    Path(__file__).read_bytes()
+    + Path(__file__).with_name("artifact_integrity.py").read_bytes()
+    + Path(__file__).with_name("oracle.py").read_bytes()
 ).hexdigest()
 
 
@@ -316,6 +319,13 @@ class ArtifactRegistry:
         fingerprint = key_id(private_key.public_key().public_bytes_raw())
         with self.store.engine.begin() as c:
             facts, authors = self.snapshot(c, job_id)
+            if (
+                require_proof(
+                    facts["execution_binding"], facts["execution_result"]["isolation"]
+                ).status
+                != "PASSED"
+            ):
+                raise ArtifactDenied()
             key, _, who = self._key(c, fingerprint, facts["tenant"], signer=role(c))
             if role(c) in authors or who["principal"] == facts["actor"]:
                 raise ArtifactDenied()
@@ -351,6 +361,11 @@ class ArtifactRegistry:
 
     def _insert(self, c, envelope):
         statement = envelope.statement
+        if (
+            require_proof(statement.execution_binding, statement.execution_result.isolation).status
+            != "PASSED"
+        ):
+            raise ArtifactDenied()
         _, raw, who = self._key(c, statement.key_id, statement.tenant, signer=role(c))
         if statement.signer_role != role(c) or who["principal"] == statement.actor:
             raise ArtifactDenied()

@@ -13,8 +13,52 @@ from caliburn.runtime.store import get_store
 from caliburn.sandbox.contracts import Bundle, Result, TestRun
 from caliburn.sandbox.control import DockerExecutor, SandboxFailure, Supervisor
 from caliburn.tool_factory.execution_queue import ExecutionQueue
+from caliburn.tool_factory.oracle import (
+    PLAN_FILE,
+    OracleProof,
+    parse_json,
+    plan_digest,
+    read_plan,
+    same,
+)
 from caliburn.tool_factory.qualification import Qualification
 from caliburn.tool_factory.service import FactoryDenied
+
+
+class OracleExecutor(DockerExecutor):
+    """Observe one input in one fresh container; host retains expected result."""
+
+    def __init__(self, parent):
+        super().__init__(parent.image, timeout=5)
+        self.guard = parent.guard
+        self.pending_creates = parent.pending_creates
+
+    async def before_dispatch(self, job):
+        if self.guard is None or not await self.guard(job):
+            raise SandboxFailure("factory_execution_denied")
+
+    def command(self, name, *, expires_at=None):
+        args = super().command(name, expires_at=expires_at)
+        args[-1] = "/opt/invoke_runner.py"
+        return args
+
+    def payload(self, job):
+        return json.dumps(
+            {
+                "files": job["source_files"],
+                "source_sha256": job["binding"]["source_sha256"],
+                "entrypoint": job["oracle_entrypoint"],
+                "input": job["oracle_input"],
+            },
+            ensure_ascii=True,
+            allow_nan=False,
+        ).encode()
+
+    def validate(self, job, raw):
+        observed = parse_json(raw)
+        if not isinstance(observed, dict) or set(observed) != {"value"}:
+            raise SandboxFailure("invalid_oracle_observation")
+        return Result(ok=True, data=observed)
 
 
 class FactoryTestExecutor(DockerExecutor):
@@ -26,6 +70,42 @@ class FactoryTestExecutor(DockerExecutor):
 
     def bind_guard(self, guard):
         self.guard = guard
+
+    async def execute(self, job):
+        try:
+            async with asyncio.timeout(self.timeout):
+                result = await super().execute(job)
+                if not result.ok or result.data["status"] != "PASSED":
+                    return result
+                plan = read_plan(job["plan_files"])
+                fingerprint = plan_digest(plan)
+                if fingerprint != job["binding"]["oracle_sha256"]:
+                    raise SandboxFailure("oracle_plan_mismatch")
+                checked = 0
+                oracle = OracleExecutor(self)
+                for case in plan.cases:
+                    # Never send the plan, tests, expected value or pass bit to the subject.
+                    observed = await oracle.execute(
+                        job | {"oracle_entrypoint": plan.entrypoint, "oracle_input": case.input}
+                    )
+                    if not observed.ok or not same(observed.data["value"], case.expected):
+                        break
+                    checked += 1
+                status = "PASSED" if checked == len(plan.cases) else "FAILED"
+                result.isolation["host_oracle"] = OracleProof(
+                    plan_sha256=fingerprint, total=len(plan.cases), checked=checked, status=status
+                ).model_dump()
+                if status == "FAILED":
+                    # Preserve the actual child exit; never invent a failing exit code.
+                    result.isolation["untrusted_test_run"] = result.data
+                    return Result(
+                        ok=False, error="factory_oracle_failed", isolation=result.isolation
+                    )
+                return result
+        except TimeoutError:
+            return Result(ok=False, error="factory_oracle_timeout")
+        except (KeyError, ValueError, SandboxFailure):
+            return Result(ok=False, error="factory_oracle_denied")
 
     async def before_dispatch(self, job):
         if self.guard is None or not await self.guard(job):
@@ -41,8 +121,8 @@ class FactoryTestExecutor(DockerExecutor):
             {
                 "files": job["source_files"],
                 "source_sha256": job["binding"]["source_sha256"],
-                "plan": job["plan_files"],
-                "plan_sha256": job["binding"]["plan_sha256"],
+                "plan": {k: v for k, v in job["plan_files"].items() if k != PLAN_FILE},
+                "plan_sha256": job["binding"]["child_plan_sha256"],
             },
             ensure_ascii=False,
         ).encode()
@@ -62,10 +142,15 @@ class FactoryTestExecutor(DockerExecutor):
             proof = TestRun.model_validate(result.data)
             if (
                 proof.source_sha256 != job["binding"]["source_sha256"]
-                or proof.plan_sha256 != job["binding"]["plan_sha256"]
+                or proof.plan_sha256 != job["binding"]["child_plan_sha256"]
             ):
                 raise SandboxFailure("factory_test_artifact_mismatch")
-            result.data = proof.model_dump()
+            # Actual child bytes/exit remain available separately. The aggregate
+            # execution record names the full reviewed host+child plan.
+            result.isolation["child_test_run"] = proof.model_dump()
+            result.data = proof.model_copy(
+                update={"plan_sha256": job["binding"]["plan_sha256"]}
+            ).model_dump()
         return result
 
 
@@ -80,6 +165,9 @@ def main():
     parser.add_argument("--plan-bundle")
     parser.add_argument("--static-report")
     parser.add_argument("--independent-tests")
+    parser.add_argument(
+        "--oracle-cases", help="Operator-owned JSON input/expected vectors; host-only comparison"
+    )
     parser.add_argument("--inspect")
     parser.add_argument("--decide")
     parser.add_argument("--binding-sha")
@@ -106,11 +194,22 @@ def main():
             )
             if contains_secret(files.model_dump(), platform_secrets(settings)):
                 raise FactoryDenied()
+            cases = (
+                json.loads(Path(args.oracle_cases).read_text(encoding="utf-8"))
+                if args.oracle_cases
+                else None
+            )
+            if contains_secret(cases, platform_secrets(settings)):
+                raise FactoryDenied()
             print(
                 json.dumps(
                     {
                         "plan_ref": policy.register_plan(
-                            args.plan_bundle, args.static_report, files, args.image
+                            args.plan_bundle,
+                            args.static_report,
+                            files,
+                            args.image,
+                            oracle_cases=cases,
                         )
                     }
                 )

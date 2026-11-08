@@ -126,3 +126,8 @@ ADR0012 adds default-off execution review and actual fixed-image stdlib test con
 ## Independent signed evidence subset (0008)
 
 A distinct owner-configured signer role/process consumes completed actual Factory execution plus its runtime checkpoint, signs full scoped source/test/manifest/declaration/static/review/execution evidence with Ed25519, and appends immutable EVIDENCE_ONLY receipts. API and capability lookup verify signatures against separate public trust mappings and live revocation before exposing read-only evidence to unrelated tasks. Private keys never enter runtime/model/sandbox. No production approval/active registry/invocation authority is created; full qualification remains open. See SIGNED_EVIDENCE.md/ADR0013. The separately authorized live gpt-6-luna arithmetic smoke verifies real multi-step model/tool persistence, not Factory or repository-coding quality; see LIVE_MODEL_VALIDATION.md.
+
+
+## Host-owned Factory comparison (execution bindingv2)
+
+ADR0014 places the behavior comparator in the existing trusted host executor, outside every subject container/PID namespace. Existing owner-controlled plan JSON binds host-only expected vectors and a separate child test-plan subset. Every invocation uses a fresh inspected/approved container with only immutable source/entrypoint/input; expected values and pass authority never enter it. The durable consumer and signer reject incomplete/mismatched host proof. Actual child exit/output/hash remain separate from aggregate full-plan evidence. No schema migration, new role/permission or host-source execution. Finite observations are not full adversarial/security/release qualification; see HOST_ORACLE.md.

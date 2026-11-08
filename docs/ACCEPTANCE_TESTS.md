@@ -166,3 +166,8 @@ test_factory_execution uses real PostgreSQL roles/processes/Docker with syntheti
 - tests/test_llm.py: explicit API-file alias/config rejection, secret-free Settings repr, official Luna Chat transport parameters and header/body separation; HTTP transport is mocked and no real credentials are loaded by pytest.
 - scripts/live_llm_smoke.py: separately opted-in real paid two-stage tool smoke and persisted cumulative50,000-token/100-call ledger. Observed3calls/745tokens/COMPLETED47 in docs/evidence/live-llm-smoke.json; not a repository-coding benchmark.
 - Approved CALIBURN_GIT_TEST_IMAGE now exercises actual pinned Git container/isolation/time/cancel paths rather than skipping them; package/copyright inventory retained.
+
+
+## Host-owned qualification observations (v2)
+
+Actual tests/test_factory_oracle.py drives separately approved PG/Docker candidates with unittest assertion/result monkeypatches and forced SystemExit0 in reporting. A real child exit0 must still yield host rejection and denied signature for wrong observations. Additional success uses two operator vectors and captures both payload phases to prove expected literal/metadata withholding. Oracle-phase revoke/timeout, bare PASSED durable receipt denial, invalid operator vectors and hostile JSON/frame/type checks are covered. No candidate code executes on the host. Full Factory execution/signature/replay/cancel/scope regression must also pass with the new immutable image. Models/principals are scripted development fixtures; no paid call or enterprise-identity/full-qualification claim.

@@ -15,6 +15,7 @@ from caliburn.tool_factory.execution_contracts import (
     ExecutionEvidence,
     ExecutionResult,
 )
+from caliburn.tool_factory.oracle import require_proof
 from caliburn.tool_factory.qualification import Qualification
 from caliburn.tool_factory.schema import exec_jobs, exec_requests, exec_roles
 from caliburn.tool_factory.service import FactoryDenied
@@ -245,6 +246,13 @@ class ExecutionQueue:
             row, _, admitted = self._owned(c, job)
             if result.ok:
                 run = TestRun.model_validate(result.data)
+                if run.status == "PASSED":
+                    try:
+                        proof = require_proof(admitted["binding"], result.isolation)
+                    except ValueError as exc:
+                        raise FactoryDenied() from exc
+                    if proof.status != "PASSED":
+                        raise FactoryDenied()
                 if (
                     run.source_sha256 != admitted["binding"]["source_sha256"]
                     or run.plan_sha256 != admitted["binding"]["plan_sha256"]

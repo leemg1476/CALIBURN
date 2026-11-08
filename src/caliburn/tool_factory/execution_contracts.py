@@ -72,11 +72,18 @@ EXEC_DIGEST = hashlib.sha256(
             "execution_queue.py",
             "execution_control.py",
             "schema.py",
+            "oracle.py",
         )
     )
     + b"".join(
         Path(__file__).parent.parent.joinpath("sandbox", name).read_bytes()
-        for name in ("control.py", "runner.py", "test_runner.py", "test_check.py")
+        for name in (
+            "control.py",
+            "runner.py",
+            "test_runner.py",
+            "test_check.py",
+            "invoke_runner.py",
+        )
     )
 ).hexdigest()
 
