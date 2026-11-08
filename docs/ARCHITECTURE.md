@@ -1,8 +1,8 @@
 # Target system architecture
 
-Current factory increment: ADR0010 adds worker-consumed exact lookup and immutable quarantined proposals (schema0005). It never executes/activates source or applies skill instructions. See CAPABILITY_PROPOSALS.md; qualified registry reuse, identity/broker/memory remain incomplete. Earlier milestone descriptions below are historical snapshots.
+Current implementation: the durable runtime consumes scoped workspace/Git/test queues, Factory proposals/static triage/qualified execution, signed evidence and internal pure-JSON releases. ADR0016/schema0009 adds active versions and a separate durable invocation consumer; source executes only in a constrained container, never by host import. Actual paid-model generation/repair and cross-task reuse are demonstrated in INTERNAL_REGISTRY.md. General MCP/Skill activation, enterprise identity/broker/memory and production qualification remain incomplete. Earlier milestone descriptions below are historical snapshots.
 
-This is the **target topology**, not the current implemented dependency graph. The running M1 slice includes the API, PostgreSQL task/event queue, fenced async worker, checkpoints and SSE; sandbox/factory/identity/broker/memory services remain future work.
+The diagram is the **target topology**. Implemented components include API, PostgreSQL task/event/invocation queues, fenced async worker, checkpoints/SSE, trusted host sandbox supervisors and the supported Factory/registry tier. Identity remains a fixed development service principal; policy-aware model routing, vault broker and governed memory are future work. The user delegates development/internal-demo review to the trusted development agent, including its own proposals; runtime/model output does not receive approval authority.
 
 ```mermaid
 flowchart TB
@@ -40,7 +40,7 @@ flowchart TB
 | Task runtime | Plan/act/observe/verify loops, steps, retry, checkpoint, cancellation | Long-lived secrets, untrusted code execution |
 | Model broker | Endpoint catalog, capabilities, budgets, redaction, residency rules | Arbitrary tool code |
 | Workspace + sandbox | Isolated repo checkout, patch, lint/test/build | Tenant admin access, unbounded network |
-| Tool factory | Generates source/spec/tests and eval report | Self-approval or instant publishing |
+| Tool factory | Generates source/spec/tests and eval report | Model-originated approval authority or instant publishing |
 | Tool/MCP registry | Versioned schemas, capabilities, lifecycle, dependency graph | Raw passwords or OAuth tokens |
 | Credential broker | Vault connection, OAuth delegated grants, rotation, token lease | Prompts or model context |
 | Evidence + memory | Artifacts, traces, distilled tested knowledge | Automatic promotion from raw chats |
