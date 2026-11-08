@@ -1,5 +1,13 @@
 # API and capability contracts
 
+## Internal executable registry (0009)
+
+`GET /api/v1/registry` returns server-scoped active internal pure-JSON tools; `GET /api/v1/registry/metrics` returns per-version invocation/attempt/success/failure/quarantine counts. Both require the service bearer and send Cache-Control:no-store. They confer no activation privilege.
+
+`POST /api/v1/tasks` additionally accepts `capabilities:null|[]|[name,...]` (max8). With server opt-in null selects current approved heads, [] selects none, explicit names must be available. Without server opt-in named capabilities are denied403. Actor/tenant/policy remain server-owned. Stored policy pins immutable release IDs, signed-envelope/source/image hashes, manifests and release implementation; policy is not exposed by the public Task projection.
+
+Registered calls accept the frozen manifest's strict closed JSON input. The durable queue returns `ok,release_ref,version,source_sha256,value,error`; output validates against the frozen output schema. There is no host import or client-provided command/image/permission override. Head moves affect new tasks only; expiry/revoke affects existing pins. Invocation errors/output drift quarantine the version. Execution can repeat after a process crash; nonce fencing prevents stale completion. See INTERNAL_REGISTRY.md/ADR0016 for scope, actual evidence and rollback.
+
 ## Quarantined factory proposal contracts (0005)
 
 `capability_lookup` and `capability_propose` have strict typed inputs/outputs, version0.1.0, maintainer ownership, digest, no egress, bounded failure/timeout metadata. New tasks need server opt-in; clients cannot grant them. Proposal canonically hashes manifest/source/tests/fixtures/dependency/SBOM/license declarations. Closed bounded JSON contract/fixture validation and Python syntax parsing do not execute code or independently validate behavior/security/license. Immutable per-Step receipts recover without duplicate artifacts/events; changed bytes at the same scoped name/version return version_conflict. GET /api/v1/capabilities/{id} is authenticated scoped inspection only. Candidate views are always QUARANTINED/untrusted/noninvokable. MCP/Skill fields describe inert artifacts, not working server connections or runtime instructions. See CAPABILITY_PROPOSALS.md and ADR0010.

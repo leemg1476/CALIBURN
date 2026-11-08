@@ -51,7 +51,7 @@ M1 is a working backend slice, not a claim of safe autonomous repository coding.
 - [x] M3.2b.2a: Host-owned finite-vector JSON comparison in fresh per-input containers after approved unittest execution; real reporting-tamper/early-exit/withholding/revocation/timeout and missing-proof denials. Bindingv2, no SQL migration. See HOST_ORACLE.md/ADR0014.
 - [ ] M3.2b.2b: Broader adversarial/property/replay/poison/dependency/license qualification and measured coverage; finite vectors alone do not release a candidate.
 - [x] M3.2b.2b.1: Fixed repeat/order/fresh-session replay profile and normalized manifest-poison triage with real execution/publication/signature deny consumers. Bindingv3, no SQL migration. See PROPERTY_QUALIFICATION.md/ADR0015.
-- [ ] M3.3b.1 + M3.4a: Independently released pure-JSON tier, immutable active versions, scoped durable invocation, cross-task reuse, revoke and rollback; complete supported-tier criteria before enabling it. Prioritize this running reuse loop next.
+- [x] M3.3b.1 + M3.4a DEVELOPMENT SLICE: pure-JSON internal releases, immutable active versions, scoped durable invocation, cross-task reuse, revoke and rollback. Real paid-model sales Tool generation/ABI repair/qualification and two new-task reuses passed. See INTERNAL_REGISTRY.md and ADR0016. Production/general MCP/Skill tiers remain open.
 
 - [x] M3.3a: Independently signed immutable EVIDENCE_ONLY bundles, real public-key verification, live key/review revocation and scoped API/unrelated-task lookup consumers; no activation. See SIGNED_EVIDENCE.md/ADR0013.
 - [ ] M3.3b: Independent complete-qualification release approval, production signing custody, registry activation/tenant allowlists/staged rollback.
@@ -59,7 +59,7 @@ M1 is a working backend slice, not a claim of safe autonomous repository coding.
 - [ ] Capability gap classifier and candidate proposal API (exact proposal subset implemented; semantic classifier open).
 - [ ] Generates source + tests + MCP manifest + permissions + dependency/SBOM metadata.
 - [ ] Sandbox qualification: unit/contract/property tests, fixtures, static analysis, SAST, dependency audit, injection/poison tests.
-- [ ] Risk-tiered approval workflow; self-approval denied by policy.
+- [ ] Enterprise risk-tiered approval workflow. Development/internal-demo approval is delegated to the trusted development agent (including its own proposals); model-originated instructions confer no authority. Hash-bound records and sandbox limits remain mandatory.
 - [ ] Immutable versioned signed artifact, registry activation, staged rollout, tenant allowlists, rollback and deprecation.
 - [ ] Reuse tests from unrelated tasks and recurrent regression, quarantine on drift; score long-term stability by observed success.
 
@@ -112,8 +112,8 @@ Track each unit in DEV_PROGRESS; each requires a running consumer, negative test
 | M3.1 | Capability gap proposal and quarantined bundle API | Candidate cannot execute |
 | M3.2 | Contract/fixture/replay/security/license/SBOM qualification | Independent runner/evidence |
 | M3.3a | IMPLEMENTED: independent Ed25519 EVIDENCE_ONLY signing, export/import, public/API/cross-task verification, live revocation | No executable admission or release approval; schema0008 |
-| M3.3b | Complete qualification release approval, production custody, registry activation and rollout/rollback | No self-approval; immutable digest, tenant allowlists |
-| M3.4 | Cross-task version-pinned reuse and drift quarantine | Measured unrelated-task regression |
+| M3.3b | INTERNAL SLICE IMPLEMENTED: pure-JSON release/active heads/rollback; complete enterprise qualification and production custody remain open | Delegated development approval; immutable digest, scoped allowlists |
+| M3.4 | INTERNAL SLICE IMPLEMENTED: cross-task pinned invocation and output-drift quarantine | Real-model reuse demonstrated; broad business benchmark remains open |
 | M4.1 | OIDC principal/tenant mapping and RBAC/ABAC | Cross-tenant deny suite |
 | M4.2 | Vault/OAuth scoped handles and trusted executor injection | No credentials in prompts/traces |
 | M4.3 | Revoke/rotate/expiry/resource and digest checks | Crash/replay/leak tests |

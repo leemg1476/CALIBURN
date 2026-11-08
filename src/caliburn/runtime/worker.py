@@ -22,6 +22,9 @@ from caliburn.tool_factory.execution_contracts import EXEC_DIGEST, ExecuteArgs, 
 from caliburn.tool_factory.execution_contracts import definitions as execution_definitions
 from caliburn.tool_factory.execution_queue import ExecutionQueue
 from caliburn.tool_factory.qualification import Qualification
+from caliburn.tool_factory.release_contracts import ReleaseDenied
+from caliburn.tool_factory.release_queue import InvocationQueue
+from caliburn.tool_factory.release_service import ReleaseService
 from caliburn.tool_factory.service import Factory, FactoryDenied
 from caliburn.tools import CURATED_DIGEST, ToolError, execute_curated_tool, tool_definitions
 
@@ -144,6 +147,27 @@ class Worker:
                     await self._db(self.store.fail, tid, token, "workspace_tool_revision_changed")
                     return
                 tools = tool_definitions()
+                for name in task["policy"].get("capabilities", {}):
+
+                    def authorize_capability(current_name=name, current_task=task):
+                        with self.store.engine.connect() as c:
+                            return (
+                                ReleaseService(self.store)
+                                .authorize(c, current_task, current_name)[1]
+                                .manifest
+                            )
+
+                    manifest = await self._db(authorize_capability)
+                    tools.append(
+                        {
+                            "type": "function",
+                            "function": {
+                                "name": name,
+                                "description": manifest["description"],
+                                "parameters": manifest["input_schema"],
+                            },
+                        }
+                    )
                 if "capability_request_execution" in task["policy"]["tools"]:
                     if task["policy"].get("exec_digest") != EXEC_DIGEST:
                         await self._db(
@@ -241,6 +265,10 @@ class Worker:
                                 or name == "capability_request_execution"
                             ):
                                 result = review_result
+                            elif name in task["policy"].get("capabilities", {}):
+                                result = await InvocationQueue(self.store).invoke(
+                                    tid, token, step["id"], name, call["function"]["arguments"]
+                                )
                             elif name == "capability_execute_tests":
                                 result = await ExecutionQueue(self.store).invoke(
                                     tid,
@@ -299,6 +327,9 @@ class Worker:
                 await self._db(self.store.commit, tid, token, step["id"], message, final)
                 if final:
                     return
+        except ReleaseDenied:
+            with contextlib.suppress(LostLease):
+                await self._db(self.store.fail, tid, token, "registry_policy_denied")
         except FactoryDenied:
             with contextlib.suppress(LostLease):
                 await self._db(self.store.fail, tid, token, "factory_policy_denied")

@@ -291,7 +291,9 @@ async def test_actual_process_death_after_tool_before_commit(durable):
     before = durable.get(t["id"])
     assert before["state"] == "RUNNING"
     assert before["model_calls"] == 1
-    await asyncio.sleep(0.4)  # natural expiry after the child process died
+    with durable.engine.connect() as c:
+        remaining = before["lease_until"] - durable.now(c)
+    await asyncio.sleep(max(0, remaining) + 0.1)  # natural DB-clock expiry after process death
     await Worker(durable, FixtureModel()).run_once()
     result = durable.get(t["id"])
     assert result["state"] == "COMPLETED"

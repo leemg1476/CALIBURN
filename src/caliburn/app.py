@@ -15,6 +15,7 @@ from caliburn.llm import ProviderError, create_model
 from caliburn.runtime.api import router
 from caliburn.runtime.redaction import contains_secret, platform_secrets
 from caliburn.tool_factory.api import router as factory_router
+from caliburn.tool_factory.release_api import router as registry_router
 from caliburn.web.routes import router as web_router
 
 app = FastAPI(title="CALIBURN bootstrap", version="0.1.0")
@@ -96,3 +97,4 @@ async def chat_completion(
 app.include_router(router(require_service_token))
 app.include_router(web_router)
 app.include_router(factory_router(require_service_token))
+app.include_router(registry_router(require_service_token))

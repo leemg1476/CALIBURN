@@ -19,6 +19,10 @@ class CrashStore(Store):
 if __name__ == "__main__":
     asyncio.run(
         Worker(
-            CrashStore(get_settings().database_url), FixtureModel(), lease_seconds=0.3
+            # Reach the deliberate crash point even under a loaded Windows/Docker host.
+            # The parent test waits for actual DB-clock lease expiry after exit73.
+            CrashStore(get_settings().database_url),
+            FixtureModel(),
+            lease_seconds=3,
         ).run_once()
     )

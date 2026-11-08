@@ -66,6 +66,7 @@ class Settings:
     allow_capability_proposals: bool = False
     allow_capability_checks: bool = False
     allow_factory_execution: bool = False
+    allow_registry_invocation: bool = False
 
 
 @lru_cache
@@ -99,6 +100,10 @@ def get_settings() -> Settings:
         model_call_cost=float(os.getenv("CALIBURN_MODEL_CALL_COST", "0")),
         task_max_cost=float(os.getenv("CALIBURN_TASK_MAX_COST", "0")),
         allow_factory_execution=os.getenv("CALIBURN_ALLOW_FACTORY_EXECUTION", "false")
+        .strip()
+        .lower()
+        == "true",
+        allow_registry_invocation=os.getenv("CALIBURN_ALLOW_REGISTRY_INVOCATION", "false")
         .strip()
         .lower()
         == "true",

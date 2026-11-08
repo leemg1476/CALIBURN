@@ -1,0 +1,221 @@
+{
+  "real_http": true,
+  "paid_calls": 0,
+  "unauthenticated_status": 401,
+  "catalog": {
+    "scope": "internal_development",
+    "tools": [
+      {
+        "release_ref": "726eea3a-f49b-4ab3-9b49-225b12fdd411",
+        "name": "monthly_region_sales",
+        "version": "1.0.1",
+        "manifest": {
+          "name": "monthly_region_sales",
+          "version": "1.0.1",
+          "kind": "tool",
+          "description": "Aggregates business sales records by year, month, and region using integer cents.",
+          "entrypoint": "monthly_sales.py:run",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "records": {
+                "type": "array",
+                "maxItems": 1000,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "year": {
+                      "type": "integer",
+                      "minimum": 2000,
+                      "maximum": 2100
+                    },
+                    "month": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 12
+                    },
+                    "region": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 40
+                    },
+                    "amount_cents": {
+                      "type": "integer",
+                      "minimum": -1000000000,
+                      "maximum": 1000000000
+                    }
+                  },
+                  "required": [
+                    "year",
+                    "month",
+                    "region",
+                    "amount_cents"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "records"
+            ],
+            "additionalProperties": false
+          },
+          "output_schema": {
+            "type": "object",
+            "properties": {
+              "groups": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "year": {
+                      "type": "integer"
+                    },
+                    "month": {
+                      "type": "integer"
+                    },
+                    "region": {
+                      "type": "string"
+                    },
+                    "total_cents": {
+                      "type": "integer"
+                    },
+                    "count": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "year",
+                    "month",
+                    "region",
+                    "total_cents",
+                    "count"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "total_cents": {
+                "type": "integer"
+              },
+              "record_count": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "groups",
+              "total_cents",
+              "record_count"
+            ],
+            "additionalProperties": false
+          },
+          "permissions": [],
+          "timeout_seconds": 10,
+          "failure_modes": [
+            "Input records must conform to the declared schema.",
+            "Aggregation returns one group for each distinct year, month, and region combination."
+          ]
+        },
+        "scope": "internal_development"
+      }
+    ]
+  },
+  "metrics": {
+    "versions": [
+      {
+        "release_ref": "726eea3a-f49b-4ab3-9b49-225b12fdd411",
+        "name": "monthly_region_sales",
+        "version": "1.0.1",
+        "invocations": 2,
+        "dispatch_attempts": 2,
+        "successful": 2,
+        "failed": 0,
+        "quarantined": false,
+        "revocation_reason": null
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "ea4d7178-0ba0-48bd-9389-8f23c2cc9823",
+      "state": "COMPLETED",
+      "history_steps": [
+        {
+          "id": "eff50974-cdc3-4f5d-9612-86d921fd0d9b",
+          "ordinal": 1,
+          "run_id": "5c271529-3c17-464a-a8a6-8aaf0d7a5151",
+          "kind": "MODEL",
+          "status": "COMPLETED",
+          "attempts": 1,
+          "tool_name": null,
+          "input_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "output_sha256": "54b62f5d08dfac28d461f71dc7a4b9a8b6d0fa399f565bf9a9bf56987c6d250d"
+        },
+        {
+          "id": "c71be0b6-1153-4ac0-86ea-0a12c83b3d33",
+          "ordinal": 2,
+          "run_id": "5c271529-3c17-464a-a8a6-8aaf0d7a5151",
+          "kind": "TOOL",
+          "status": "COMPLETED",
+          "attempts": 1,
+          "tool_name": "monthly_region_sales",
+          "input_sha256": "57f16949a3f742eb0c4c74d0c79db46d57a4583236297dd1061c3ae444358868",
+          "output_sha256": "b78b83dc2baa12b11ed05b94e43d38e090d45d9fda1f40589eb4d11a9fbcc450"
+        },
+        {
+          "id": "6b3506d7-d1d1-4180-8e0e-6b3239c485ed",
+          "ordinal": 3,
+          "run_id": "5c271529-3c17-464a-a8a6-8aaf0d7a5151",
+          "kind": "MODEL",
+          "status": "COMPLETED",
+          "attempts": 1,
+          "tool_name": null,
+          "input_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "output_sha256": "f23c4dbbdbbd5a37aecb2fa5e1942278439e4a46a7e502fb9805c9879f501534"
+        }
+      ],
+      "sse_registered_tool_event": true
+    },
+    {
+      "task_id": "f729b7a6-ce57-4436-8485-f5f38512ba89",
+      "state": "COMPLETED",
+      "history_steps": [
+        {
+          "id": "0229cb16-384d-406e-b482-917670885349",
+          "ordinal": 1,
+          "run_id": "9f3e5c2f-a27b-4149-9f34-e832234ea649",
+          "kind": "MODEL",
+          "status": "COMPLETED",
+          "attempts": 1,
+          "tool_name": null,
+          "input_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "output_sha256": "34cd6c39ff0a07f2e101d732da166110bc4e2f1efefde5782fa184c14714f429"
+        },
+        {
+          "id": "a18a5599-8f04-4bec-ac5a-3dff4d7d3c9a",
+          "ordinal": 2,
+          "run_id": "9f3e5c2f-a27b-4149-9f34-e832234ea649",
+          "kind": "TOOL",
+          "status": "COMPLETED",
+          "attempts": 1,
+          "tool_name": "monthly_region_sales",
+          "input_sha256": "e2fd71fccb64a39a352745b49a2e1d4740906d1b017e51d916e9858d94ab07d7",
+          "output_sha256": "bf24d2ddbceaa88ec9d37e243a624001b144ba05e023c509dd1787b9079860b0"
+        },
+        {
+          "id": "75643e24-83d2-4c32-8653-b05a7411b114",
+          "ordinal": 3,
+          "run_id": "9f3e5c2f-a27b-4149-9f34-e832234ea649",
+          "kind": "MODEL",
+          "status": "COMPLETED",
+          "attempts": 1,
+          "tool_name": null,
+          "input_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "output_sha256": "2da88b988234420a454187e9c5e38810e77b983c533a08fa2eaa3e034c9beb95"
+        }
+      ],
+      "sse_registered_tool_event": true
+    }
+  ],
+  "fixture_provider_used_for_read_only_api": true,
+  "persisted_task_model": "gpt-6-luna"
+}

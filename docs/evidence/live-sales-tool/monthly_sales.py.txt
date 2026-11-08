@@ -1,0 +1,18 @@
+def run(records):
+    totals = {}
+    counts = {}
+    keys = []
+    total_cents = 0
+    for record in records:
+        key = (record["year"], record["month"], record["region"])
+        if key not in totals:
+            totals[key] = 0
+            counts[key] = 0
+            keys = keys + [key]
+        totals[key] = totals[key] + record["amount_cents"]
+        counts[key] = counts[key] + 1
+        total_cents = total_cents + record["amount_cents"]
+    groups = []
+    for key in sorted(keys):
+        groups = groups + [{"year": key[0], "month": key[1], "region": key[2], "total_cents": totals[key], "count": counts[key]}]
+    return {"groups": groups, "total_cents": total_cents, "record_count": len(records)}
