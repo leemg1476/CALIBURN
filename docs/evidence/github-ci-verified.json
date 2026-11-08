@@ -1,0 +1,35 @@
+{
+  "run_url": "https://github.com/leemg1476/CALIBURN/actions/runs/42479317458",
+  "code_commit": "211097a8681cfc205f25f8e46ad3eaed5aa22681",
+  "job_id": 128727580141,
+  "conclusion": "success",
+  "pytest": {
+    "passed": 281,
+    "failed": 0,
+    "skipped": 77,
+    "seconds": 169.27,
+    "warnings": 1
+  },
+  "hosted_git_image_configured": false,
+  "additional_local_git_cases_passed": 4,
+  "checks": [
+    "dependency installation",
+    "Ruff",
+    "format",
+    "Node 3 tests",
+    "data sandbox image build",
+    "reviewed-test image build",
+    "full pytest",
+    "alembic upgrade head",
+    "real HTTP/PostgreSQL/SSE replay demo",
+    "separate worker/supervisor/container workspace demo",
+    "actual task Git checkout/staged diff demo"
+  ],
+  "inference": "fixture/scripted mocks; no paid calls in CI",
+  "local_paid_validation": {
+    "model": "gpt-6-luna",
+    "calls": 3,
+    "total_tokens": 745,
+    "evidence": "live-llm-smoke.json"
+  }
+}
